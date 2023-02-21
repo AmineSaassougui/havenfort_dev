@@ -1,23 +1,27 @@
 package services;
 
 import entities.Event;
+import org.springframework.beans.factory.annotation.Autowired;
+import repositories.EventRepo;
 
 import java.util.List;
 
 public class EventService implements IEventService{
+    @Autowired
+    EventRepo eventRepo;
     @Override
     public Event addEvent(Event event) {
-        return null;
+        return eventRepo.save(event);
     }
 
     @Override
     public List<Event> findAllEvent() {
-        return null;
+        return eventRepo.findAll();
     }
 
     @Override
     public Event updateEvent(Event event) {
-        return null;
+        return eventRepo.save(event);
     }
 
     @Override
@@ -27,6 +31,7 @@ public class EventService implements IEventService{
 
     @Override
     public void deleteEvent(Long id) {
+        eventRepo.deleteById(id);
 
     }
 }
