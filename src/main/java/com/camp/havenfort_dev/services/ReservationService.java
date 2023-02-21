@@ -1,23 +1,33 @@
 package com.camp.havenfort_dev.services;
 
+
 import com.camp.havenfort_dev.entities.Reservation;
+
+
+
+import entities.Reservation;
+import org.springframework.beans.factory.annotation.Autowired;
+import repositories.ReservationRepo;
 
 import java.util.List;
 
-public class ReservationService implements IReservationService {
+public class ReservationService implements IReservationService{
+    @Autowired
+    ReservationRepo reservationRepo;
+
     @Override
     public Reservation addReservation(Reservation r) {
-        return null;
+        return reservationRepo.save(r);
     }
 
     @Override
     public List<Reservation> findAllReservation() {
-        return null;
+        return reservationRepo.findAll();
     }
 
     @Override
     public Reservation updateReservation(Reservation r) {
-        return null;
+        return reservationRepo.save(r);
     }
 
     @Override
@@ -27,6 +37,6 @@ public class ReservationService implements IReservationService {
 
     @Override
     public void deleteReservation(Long id) {
-
+        reservationRepo.deleteById(id);
     }
 }
