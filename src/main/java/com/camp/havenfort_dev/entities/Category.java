@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Set;
 
 @Getter
@@ -17,27 +15,15 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 
-public class Promotion implements Serializable {
+public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long pid ;
-    private double discountAmount ;
-    @Temporal(TemporalType.DATE)
-    private Date startdate ;
-    @Temporal(TemporalType.DATE)
-    private Date enddate ;
-    private boolean isActive ;
-    @ManyToMany
+    private Long idc ;
+    private String cname ;
+    private  String cdescription ;
 
+    @OneToMany(mappedBy = "category",  cascade =CascadeType.ALL)
     private Set<Tools> tools ;
-
-
-
-
-
-
-
-
 
 }

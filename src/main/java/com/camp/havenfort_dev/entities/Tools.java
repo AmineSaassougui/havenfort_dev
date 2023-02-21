@@ -15,16 +15,19 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+(class declaraion)
 public class Tools implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long idt;
 
+(class declaraion)
     private String name ;
     private double price ;
     private int quantity ;
     @Enumerated(EnumType.STRING)
+
     @Column(name = "tools_condition")
     private  Condition condition ;
     private  String description ;
@@ -35,6 +38,7 @@ public class Tools implements Serializable {
     private Set<Promotion> promos ;
 
     @ManyToMany(mappedBy ="tools", cascade =CascadeType.ALL)
+
     private Set<Shop> shops ;
     @ManyToOne
     @JsonIgnore
