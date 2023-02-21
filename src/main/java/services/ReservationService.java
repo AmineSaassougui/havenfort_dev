@@ -2,10 +2,11 @@ package services;
 
 import entities.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import repositories.ReservationRepo;
 
 import java.util.List;
-
+@Service
 public class ReservationService implements IReservationService{
     @Autowired
     ReservationRepo reservationRepo;

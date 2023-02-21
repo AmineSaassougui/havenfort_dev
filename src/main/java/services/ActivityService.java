@@ -2,10 +2,11 @@ package services;
 
 import entities.Activity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import repositories.ActivityRepo;
 
 import java.util.List;
-
+@Service
 public class ActivityService implements IActivityService{
     @Autowired
     ActivityRepo activityRepo;
