@@ -2,10 +2,11 @@ package services;
 
 import entities.Campsite;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import repositories.CampsiteRepo;
 
 import java.util.List;
-
+@Service
 public class CampsiteService implements ICampsiteService{
     @Autowired
     CampsiteRepo campsiteRepo;
