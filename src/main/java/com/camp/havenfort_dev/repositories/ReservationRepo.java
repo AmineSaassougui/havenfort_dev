@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ReservationRepo extends JpaRepository<Reservation,Long> {
-    @Query("SELECT DISTINCT res FROM Reservation res join res.event")
-    List<Reservation> getReservationByEvent(@Param("idEvent") Long idEvent);
+    @Query("SELECT DISTINCT res FROM Reservation res WHERE res.event.idEvent =:id")
+    List<Reservation> getReservationByEvent(@Param("id") Long idEvent);
 }

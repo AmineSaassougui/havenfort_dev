@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ActivityRepo extends JpaRepository<Activity,Long> {
-    @Query("SELECT DISTINCT act FROM Activity act join act.event")
-    List<Activity> getActivityByEvent(@Param("idEvent") Long idEvent);
+    @Query("SELECT DISTINCT act FROM Activity act WHERE act.event.idEvent =:id")
+    List<Activity> getActivityByEvent(@Param("id") Long idEvent);
 }

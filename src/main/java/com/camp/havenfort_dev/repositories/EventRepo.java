@@ -8,9 +8,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface EventRepo extends JpaRepository<Event,Long> {
-    @Query("SELECT DISTINCT eve FROM Event eve join eve.campsite")
-    List<Event> getEventByCampsite(@Param("idCampsite") Long idCampsite);
+    @Query("SELECT DISTINCT eve FROM Event eve WHERE eve.campsite.idCampsite =:id")
+    List<Event> getEventByCampsite(@Param("id") Long idCampsite);
 
-    @Query("SELECT DISTINCT e FROM Event e join e.centerOfCamp")
-    List<Event> getEventByCenterOfCamp(@Param("idCenterOfCamp") Long idCenterOfCamp);
+    @Query("SELECT DISTINCT e FROM Event e WHERE e.centerOfCamp.idCenterOfCamp =:id")
+    List<Event> getEventByCenterOfCamp(@Param("id") Long idCenterOfCamp);
 }
