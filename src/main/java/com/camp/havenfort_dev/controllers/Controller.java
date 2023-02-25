@@ -38,14 +38,19 @@ public class Controller {
     }
 
     @PutMapping("/updateReservation")
-    public ResponseEntity<Reservation> updateEmployee(@RequestBody Reservation reservation){
+    public ResponseEntity<Reservation> updateReservation(@RequestBody Reservation reservation){
         Reservation updateReservation = iReservationService.updateReservation(reservation);
         return new ResponseEntity<>(updateReservation, HttpStatus.OK);
     }
     @DeleteMapping("/deleteReservation/{id}")
-    public ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id){
+    public ResponseEntity<?> deleteReservation(@PathVariable("id") Long id){
         iReservationService.deleteReservation(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/getReservation/{idEvent}")
+    @ResponseBody
+    public List<Reservation> getReservationByEvent(Long idEvent){
+        return iReservationService.getReservationByEvent(idEvent);
     }
 
     @PostMapping("/AddEvent")
@@ -73,6 +78,16 @@ public class Controller {
         iEventService.deleteEvent(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/getEventByCampsite/{idCampsite}")
+    @ResponseBody
+    public List<Event> getEventByCampsite(@PathVariable("idCampsite") Long idCampsite){
+        return iEventService.getEventByCampsite(idCampsite);
+    }
+    @GetMapping("/getEventByCenterOfCamp/{idCenterOfCamp}")
+    @ResponseBody
+    public List<Event> getEventByCenterOfCamp(@PathVariable("idCenterOfCamp") Long idCenterOfCamp){
+        return iEventService.getEventByCenterOfCamp(idCenterOfCamp);
+    }
     @PostMapping ("/addEvent/{idActivity}")
     @ResponseBody
     public void addEventToActivity(@RequestBody Event event,@PathVariable("idActivity") Long idActivity){
@@ -83,6 +98,7 @@ public class Controller {
     public void addEventToReservation(@RequestBody Event event,@PathVariable("idReservation") Long idReservation) {
         iEventService.addEventToReservation(event,idReservation);
     }
+
     @PostMapping("/AddCenterOfCamp")
     public CenterOfCamp addCenterOfCamp(@RequestBody CenterOfCamp centerOfCamp){
         return iCenterOfCampService.addCenterOfCamp(centerOfCamp);
@@ -168,6 +184,10 @@ public class Controller {
         iActivityService.deleteActivity(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    @GetMapping("/getActivity/{idEvent}")
+    @ResponseBody
+    public List<Activity> getActivityByEvent(Long idEvent){
+        return iActivityService.getActivityByEvent(idEvent);
+    }
 
 }

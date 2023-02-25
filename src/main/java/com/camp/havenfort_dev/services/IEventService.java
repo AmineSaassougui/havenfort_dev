@@ -10,11 +10,14 @@ public interface IEventService extends Serializable {
 
     Event addEvent(Event event);
 
-    public List<Event> findAllEvent();
-    public Event updateEvent(Event event);
-    public Event findById(Long id);
-    public void deleteEvent(Long id);
+    List<Event> findAllEvent();
+    Event updateEvent(Event event);
+    Event findById(Long id);
+    void deleteEvent(Long id);
     void addEventToActivity(Event event,Long idActivity);
     void addEventToReservation(Event event, Long idReservation);
+    List<Event> getEventByCampsite(Long idCampsite);
+    List<Event> getEventByCenterOfCamp(Long idCenterOfCamp);
+
 
 }
