@@ -1,4 +1,4 @@
-package entities;
+package com.camp.havenfort_dev.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -7,24 +7,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-public class Reservation {
+public class CenterOfCamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    private String prenom;
-    private String nom;
-    private String mail;
-    private Date date;
+    private String lieu;
+    private String owner;
+    private Integer capacity;
+    private Integer nbStaff;
+    private String opening;
+    private String closure;
 
-    @ManyToOne
     @JsonIgnore
-    private Event event;
+    @OneToMany(mappedBy="centerOfCamp", cascade=CascadeType.ALL)
+    private Set<Event> events;
 }

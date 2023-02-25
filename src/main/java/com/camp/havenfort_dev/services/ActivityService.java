@@ -1,9 +1,10 @@
-package services;
+package com.camp.havenfort_dev.services;
 
-import entities.Activity;
+import com.camp.havenfort_dev.entities.Activity;
+import com.camp.havenfort_dev.exception.UserNotFoundException;
+import com.camp.havenfort_dev.repositories.ActivityRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repositories.ActivityRepo;
 
 import java.util.List;
 @Service
@@ -27,7 +28,8 @@ public class ActivityService implements IActivityService{
 
     @Override
     public Activity findById(Long id) {
-        return null;
+        return activityRepo.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User by id " + id + " was not found"));
     }
 
     @Override

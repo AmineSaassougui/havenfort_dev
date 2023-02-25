@@ -1,6 +1,6 @@
-package services;
+package com.camp.havenfort_dev.services;
 
-import entities.Activity;
+import com.camp.havenfort_dev.entities.Activity;
 
 import java.io.Serializable;
 import java.util.List;

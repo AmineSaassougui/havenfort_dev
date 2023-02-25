@@ -1,11 +1,13 @@
-package controllers;
+package com.camp.havenfort_dev.controllers;
 
-import entities.*;
+import com.camp.havenfort_dev.entities.*;
+import com.camp.havenfort_dev.services.*;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import services.*;
+
 
 import java.util.List;
 

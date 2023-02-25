@@ -1,6 +1,6 @@
-package services;
+package com.camp.havenfort_dev.services;
 
-import entities.Campsite;
+import com.camp.havenfort_dev.entities.Campsite;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,4 +12,5 @@ public interface ICampsiteService extends Serializable {
     public Campsite updateCampsite(Campsite campsite);
     public Campsite findById(Long id);
     public void deleteCampsite(Long id);
+    void addCampsiteToEvent(Campsite campsite,Long idEvent);
 }
