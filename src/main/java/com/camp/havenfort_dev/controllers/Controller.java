@@ -34,6 +34,11 @@ public class Controller {
         List<Reservation> reservations = iReservationService.findAllReservation();
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
+    @GetMapping("/findReservation/{id}")
+    public ResponseEntity<Reservation> getReservationById (@PathVariable("id")Long id){
+        Reservation reservation = iReservationService.findReservationById(id);
+        return new ResponseEntity<>(reservation, HttpStatus.OK);
+    }
 
     @PutMapping("/updateReservation")
     public ResponseEntity<Reservation> updateEmployee(@RequestBody Reservation reservation){
@@ -45,6 +50,7 @@ public class Controller {
         iReservationService.deleteReservation(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PostMapping("/AddEvent")
     public Event addEvent(@RequestBody Event event){
         return iEventService.addEvent(event);
@@ -53,6 +59,11 @@ public class Controller {
     public ResponseEntity<List<Event>> getAllEvent (){
         List<Event> events = iEventService.findAllEvent();
         return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+    @GetMapping("/findEvent/{id}")
+    public ResponseEntity<Event> getEventById (@PathVariable("id")Long id){
+        Event event = iEventService.findById(id);
+        return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
     @PutMapping("/updateEvent")
@@ -65,6 +76,16 @@ public class Controller {
         iEventService.deleteEvent(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PostMapping ("/addEvent/{idActivity}")
+    @ResponseBody
+    public void addEventToActivity(@RequestBody Event event,@PathVariable("idActivity") Long idActivity){
+        iEventService.addEventToActivity(event,idActivity);
+    }
+    @PostMapping ("/addEvent/{idReservation}")
+    @ResponseBody
+    public void addEventToReservation(@RequestBody Event event,@PathVariable("idReservation") Long idReservation) {
+        iEventService.addEventToReservation(event,idReservation);
+    }
     @PostMapping("/AddCenterOfCamp")
     public CenterOfCamp addCenterOfCamp(@RequestBody CenterOfCamp centerOfCamp){
         return iCenterOfCampService.addCenterOfCamp(centerOfCamp);
@@ -73,6 +94,11 @@ public class Controller {
     public ResponseEntity<List<CenterOfCamp>> getAllCenterOfCamp (){
         List<CenterOfCamp> centerOfCamps = iCenterOfCampService.findAllCenterOfCamp();
         return new ResponseEntity<>(centerOfCamps, HttpStatus.OK);
+    }
+    @GetMapping("/findCenterOfCamp/{id}")
+    public ResponseEntity<CenterOfCamp> getCenterOfCampById (@PathVariable("id")Long id){
+        CenterOfCamp centerOfCamp = iCenterOfCampService.findById(id);
+        return new ResponseEntity<>(centerOfCamp, HttpStatus.OK);
     }
 
     @PutMapping("/updateCenterOfCamp")
@@ -85,6 +111,11 @@ public class Controller {
         iCenterOfCampService.deleteCenterOfCamp(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PostMapping ("/addCenterOfCamp/{idEvent}")
+    public void addCenterOfCampToEvent(@RequestBody CenterOfCamp centerOfCamp,@PathVariable("idEvent") Long idEvent){
+        iCenterOfCampService.addCenterOfCampToEvent(centerOfCamp,idEvent);
+    }
+
     @PostMapping("/AddCampsite")
     public Campsite addCampsite(@RequestBody Campsite campsite){
         return iCampsiteService.addCampsite(campsite);
@@ -93,6 +124,11 @@ public class Controller {
     public ResponseEntity<List<Campsite>> getAllCampsite (){
         List<Campsite> campsites = iCampsiteService.findAllCampsite();
         return new ResponseEntity<>(campsites, HttpStatus.OK);
+    }
+    @GetMapping("/findCampsite/{id}")
+    public ResponseEntity<Campsite> getCampsiteById (@PathVariable("id")Long id){
+        Campsite campsite = iCampsiteService.findById(id);
+        return new ResponseEntity<>(campsite, HttpStatus.OK);
     }
 
     @PutMapping("/updateCampsite")
@@ -105,6 +141,11 @@ public class Controller {
         iCampsiteService.deleteCampsite(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PostMapping("/addCampsite/{idEvent}")
+    public void addCampsiteToEvent(@RequestBody Campsite campsite,@PathVariable("idEvent") Long idEvent){
+        iCampsiteService.addCampsiteToEvent(campsite,idEvent);
+    }
+
     @PostMapping("/AddActivity")
     public Activity addActivity(@RequestBody Activity activity){
         return iActivityService.addActivity(activity);
@@ -113,6 +154,11 @@ public class Controller {
     public ResponseEntity<List<Activity>> getAllActivity (){
         List<Activity> activities = iActivityService.findAllActivity();
         return new ResponseEntity<>(activities, HttpStatus.OK);
+    }
+    @GetMapping("/findActivity/{id}")
+    public ResponseEntity<Activity> getActivityById (@PathVariable("id")Long id){
+        Activity activity = iActivityService.findById(id);
+        return new ResponseEntity<>(activity, HttpStatus.OK);
     }
 
     @PutMapping("/updateActivity")
@@ -125,12 +171,5 @@ public class Controller {
         iActivityService.deleteActivity(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
-
-
-
-
 
 }
