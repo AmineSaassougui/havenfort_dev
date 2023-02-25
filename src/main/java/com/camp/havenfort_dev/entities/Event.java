@@ -18,7 +18,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Integer idEvent;
     private String type;
     @JsonIgnore
     @OneToMany(mappedBy="event", cascade=CascadeType.ALL)

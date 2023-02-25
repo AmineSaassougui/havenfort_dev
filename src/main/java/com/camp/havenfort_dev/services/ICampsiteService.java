@@ -12,4 +12,5 @@ public interface ICampsiteService extends Serializable {
     public Campsite updateCampsite(Campsite campsite);
     public Campsite findById(Long id);
     public void deleteCampsite(Long id);
+    void addCampsiteToEvent(Campsite campsite,Long idEvent);
 }

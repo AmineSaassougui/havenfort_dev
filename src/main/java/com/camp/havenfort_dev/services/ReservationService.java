@@ -1,14 +1,16 @@
 package com.camp.havenfort_dev.services;
 
 
+
+
+
+
+
+import com.camp.havenfort_dev.exception.UserNotFoundException;
+import com.camp.havenfort_dev.repositories.ReservationRepo;
 import com.camp.havenfort_dev.entities.Reservation;
-
-
-
-import entities.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repositories.ReservationRepo;
 
 import java.util.List;
 @Service
@@ -33,7 +35,8 @@ public class ReservationService implements IReservationService{
 
     @Override
     public Reservation findReservationById(Long id) {
-        return null;
+        return reservationRepo.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User by id " + id + " was not found"));
     }
 
     @Override
