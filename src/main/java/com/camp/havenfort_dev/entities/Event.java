@@ -19,7 +19,9 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer idEvent;
-    private String type;
+    private String typeEvent;
+    private String nomEvent;
+    private Boolean active;
     @JsonIgnore
     @OneToMany(mappedBy="event", cascade=CascadeType.ALL)
     private Set<Activity> activities;
