@@ -14,8 +14,9 @@ import java.util.List;
 public interface IActivityService extends Serializable {
 
     Activity addActivity(Activity activity);
-    public List<Activity> findAllActivity();
-    public Activity updateActivity(Activity activity);
-    public Activity findById(Long id);
-    public void deleteActivity(Long id);
+    List<Activity> findAllActivity();
+    Activity updateActivity(Activity activity);
+    Activity findById(Long id);
+    void deleteActivity(Long id);
+    List<Activity> getActivityByEvent(Long idEvent);
 }

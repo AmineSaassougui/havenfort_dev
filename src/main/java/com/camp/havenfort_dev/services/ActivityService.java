@@ -40,4 +40,11 @@ public class ActivityService implements IActivityService{
         activityRepo.deleteById(id);
     }
 
+
+
+    @Override
+    public List<Activity> getActivityByEvent(Long idEvent) {
+        return activityRepo.getActivityByEvent(idEvent);
+    }
+
 }

@@ -65,6 +65,16 @@ public class EventService implements IEventService{
 
     }
 
+    @Override
+    public List<Event> getEventByCampsite(Long idCampsite) {
+        return eventRepo.getEventByCampsite(idCampsite);
+    }
+
+    @Override
+    public List<Event> getEventByCenterOfCamp(Long idCenterOfCamp) {
+        return eventRepo.getEventByCenterOfCamp(idCenterOfCamp);
+    }
+
 
 
 }
