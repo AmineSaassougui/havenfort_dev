@@ -19,7 +19,8 @@ public class CenterOfCamp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long idCenterOfCamp;
-    private String lieu;
+    private String nomCenter;
+    private String lieuCenter;
     private String owner;
     private Integer capacity;
     private Integer nbStaff;

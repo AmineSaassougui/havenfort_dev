@@ -24,6 +24,7 @@ public interface IEventService extends Serializable {
     void addEventToReservation(Event event, Long idReservation);
     List<Event> getEventByCampsite(Long idCampsite);
     List<Event> getEventByCenterOfCamp(Long idCenterOfCamp);
+    Event assignEventToCenterOfCamp(Event event, String nomC, String lieuC);
 
 
 }

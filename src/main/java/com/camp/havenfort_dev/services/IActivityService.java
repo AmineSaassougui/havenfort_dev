@@ -19,4 +19,5 @@ public interface IActivityService extends Serializable {
     Activity findById(Long id);
     void deleteActivity(Long id);
     List<Activity> getActivityByEvent(Long idEvent);
+    Activity assignActivityToEvent(Activity activity,String nomE,String typeE);
 }

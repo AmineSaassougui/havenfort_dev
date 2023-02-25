@@ -194,6 +194,17 @@ public class Controller {
     public List<Activity> getActivityByEvent(Long idEvent){
         return iActivityService.getActivityByEvent(idEvent);
     }
-
+    @PutMapping("/assignActivityToEvent/{nom}/{prenom}")
+    public Activity assignActivityToEvent(@RequestBody Activity activity,
+                                          @PathVariable("nom") String nomE,
+                                          @PathVariable("prenom") String typeE){
+        return iActivityService.assignActivityToEvent(activity,nomE,typeE);
+    }
+    @PutMapping("/assignEventToCenterOfCamp/{nom}/{lieu}")
+    public Event assignEventToCenterOfCamp(@RequestBody Event event,
+                                           @PathVariable("nom") String nomC,
+                                           @PathVariable("lieu") String lieuC){
+        return iEventService.assignEventToCenterOfCamp(event,nomC,lieuC);
+    }
 
 }

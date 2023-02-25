@@ -19,6 +19,7 @@ public class Activity {
     private Long idActivity;
     private String type;
     private String lieu;
+    private Boolean archive;
 
     @ManyToOne
     @JsonIgnore
