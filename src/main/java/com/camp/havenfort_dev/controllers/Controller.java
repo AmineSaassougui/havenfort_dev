@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-
+@RequestMapping("/Camp")
 @RestController
 @AllArgsConstructor
 public class Controller {
