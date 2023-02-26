@@ -26,6 +26,7 @@ public class CenterOfCamp {
     private Integer nbStaff;
     private String opening;
     private String closure;
+    private TypeCenAct typeCenter;
 
     @JsonIgnore
     @OneToMany(mappedBy="centerOfCamp", cascade=CascadeType.ALL)

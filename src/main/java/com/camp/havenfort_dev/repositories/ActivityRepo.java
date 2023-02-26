@@ -2,6 +2,7 @@ package com.camp.havenfort_dev.repositories;
 
 import com.camp.havenfort_dev.entities.Activity;
 import com.camp.havenfort_dev.entities.Event;
+import com.camp.havenfort_dev.entities.TypeCenAct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,4 +14,6 @@ public interface ActivityRepo extends JpaRepository<Activity,Long> {
     List<Activity> getActivityByEvent(@Param("id") Long idEvent);
 
     Integer countByArchiveIsFalseAndEvent(Event event);
+    @Query("SELECT ac FROM Activity ac WHERE ac.typeActivity = :type")
+    Activity getActivitiesByType(@Param("type") TypeCenAct typeActivity);
 }
