@@ -20,7 +20,8 @@ public class Activity {
     private String type;
     private String lieu;
     private Boolean archive;
-    
+    @Enumerated(EnumType.STRING)
+    private TypeCenAct typeActivity;
     @ManyToOne
     @JsonIgnore
     private Event event;
