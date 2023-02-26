@@ -20,10 +20,11 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long idReservation;
-    private String prenom;
-    private String nom;
+    private String prenomRes;
+    private String nomRes;
     private String mail;
     private Date date;
+    private Boolean activeRes;
 
     @ManyToOne
     @JsonIgnore
