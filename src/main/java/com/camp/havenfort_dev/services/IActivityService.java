@@ -2,6 +2,7 @@ package com.camp.havenfort_dev.services;
 
 
 import com.camp.havenfort_dev.entities.Activity;
+import com.camp.havenfort_dev.entities.TypeCenAct;
 
 
 
@@ -20,4 +21,5 @@ public interface IActivityService extends Serializable {
     void deleteActivity(Long id);
     List<Activity> getActivityByEvent(Long idEvent);
     Activity assignActivityToEvent(Activity activity,String nomE,String typeE);
+    List<Activity> suggestAct(Long idCenter);
 }

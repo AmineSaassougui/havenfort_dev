@@ -18,4 +18,5 @@ public interface EventRepo extends JpaRepository<Event,Long> {
     Event getEventByNomAndType(@Param("nom") String nomE,@Param("type") String typeE);
 
     Integer countByActiveIsFalseAndCenterOfCamp(CenterOfCamp centerOfCamp);
+    List<Event> findByCenterOfCamp(CenterOfCamp centerOfCamp);
 }
