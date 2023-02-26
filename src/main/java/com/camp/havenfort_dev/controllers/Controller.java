@@ -201,4 +201,8 @@ public class Controller {
                                            @PathVariable("lieu") String lieuC){
         return iEventService.assignEventToCenterOfCamp(event,nomC,lieuC);
     }
+    @GetMapping("suggest/{id}")
+    public List<Activity> suggestAct(@PathVariable("id") Long idCenter) {
+        return iActivityService.suggestAct(idCenter);
+    }
 }
