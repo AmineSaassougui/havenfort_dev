@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/havenfort")
+@RequestMapping("/category")
 public class CategoryRestController {
     @Autowired
     ICategoryServices categoryServices;
@@ -31,9 +31,9 @@ public class CategoryRestController {
     @ResponseBody
     public Shop addShop(@RequestBody Shop shop){return categoryServices.addShop(shop);}
 
-    @PostMapping("/addTools")
+   /* @PostMapping("/addTools")
     @ResponseBody
-    public Tools addTools(@RequestBody Tools tools){return categoryServices.addTools(tools);}
+    public Tools addTools(@RequestBody Tools tools){return categoryServices.addTools(tools);}*/
 
 
 
