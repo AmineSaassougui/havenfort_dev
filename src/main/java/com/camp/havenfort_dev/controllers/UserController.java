@@ -1,7 +1,7 @@
-package com.camp.havenfort_dev.controller;
+package com.camp.havenfort_dev.controllers;
 
-import com.camp.havenfort_dev.entity.User;
-import com.camp.havenfort_dev.service.imp.UserServiceImp;
+import com.camp.havenfort_dev.entities.User;
+import com.camp.havenfort_dev.services.imp.UserServiceImp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

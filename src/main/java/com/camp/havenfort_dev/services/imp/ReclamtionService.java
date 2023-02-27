@@ -1,7 +1,7 @@
-package com.camp.havenfort_dev.service.imp;
+package com.camp.havenfort_dev.services.imp;
 
-import com.camp.havenfort_dev.entity.Reclamation;
-import com.camp.havenfort_dev.service.ReclamationService;
+import com.camp.havenfort_dev.entities.Reclamation;
+import com.camp.havenfort_dev.services.ReclamationService;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
-package com.camp.havenfort_dev.service.imp;
+package com.camp.havenfort_dev.services.imp;
 
-import com.camp.havenfort_dev.Repository.Userrepository;
-import com.camp.havenfort_dev.entity.Role;
-import com.camp.havenfort_dev.entity.User;
-import com.camp.havenfort_dev.service.UserService;
+import com.camp.havenfort_dev.Repositories.Userrepository;
+import com.camp.havenfort_dev.entities.Role;
+import com.camp.havenfort_dev.entities.User;
+import com.camp.havenfort_dev.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

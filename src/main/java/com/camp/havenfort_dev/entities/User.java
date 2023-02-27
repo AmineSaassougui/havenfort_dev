@@ -1,4 +1,4 @@
-package com.camp.havenfort_dev.entity;
+package com.camp.havenfort_dev.entities;
 
 import javax.persistence.*;
 

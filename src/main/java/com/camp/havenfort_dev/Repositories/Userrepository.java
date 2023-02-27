@@ -1,6 +1,6 @@
-package com.camp.havenfort_dev.Repository;
+package com.camp.havenfort_dev.Repositories;
 
-import com.camp.havenfort_dev.entity.User;
+import com.camp.havenfort_dev.entities.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
