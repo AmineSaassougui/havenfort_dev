@@ -36,7 +36,7 @@ public class Event {
     @OneToMany(mappedBy="event", cascade=CascadeType.ALL)
     private Set<Reservation> reservations ;
 
-    @ManyToMany(mappedBy="events", cascade=CascadeType.ALL)
+    @ManyToMany
     @JsonIgnore
     private Set<User> users;
 

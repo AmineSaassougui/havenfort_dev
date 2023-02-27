@@ -25,7 +25,7 @@ public class User {
     @ManyToMany
     @JsonIgnore
     private Set<Reservation> reservations;
-    @ManyToMany
+    @ManyToMany(mappedBy="users", cascade=CascadeType.ALL)
     @JsonIgnore
     private Set<Event> events;
 
