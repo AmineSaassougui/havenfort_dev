@@ -1,7 +1,10 @@
 package com.camp.havenfort_dev.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -24,6 +27,12 @@ public class User {
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Tools> tools ;
 
+    @ManyToMany
+    @JsonIgnore
+    private Set<Reservation> reservations;
+    @ManyToMany(mappedBy="users", cascade=CascadeType.ALL)
+    @JsonIgnore
+    private Set<Event> events;
 
 
 
