@@ -29,7 +29,6 @@ public class Promotion implements Serializable {
     private Date enddate ;
     private boolean isActive ;
     @ManyToMany
-
     private Set<Tools> tools ;
 
 

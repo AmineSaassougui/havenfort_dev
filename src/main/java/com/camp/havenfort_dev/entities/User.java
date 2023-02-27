@@ -1,6 +1,7 @@
 package com.camp.havenfort_dev.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -19,6 +20,12 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role ;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Tools> tools ;
+
+
+
 
     public long getId() {
         return id;

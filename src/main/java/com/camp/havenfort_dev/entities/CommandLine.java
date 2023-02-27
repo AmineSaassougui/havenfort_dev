@@ -16,6 +16,10 @@ public class CommandLine {
     @ManyToOne
     panier panier;
 
+
+    @ManyToOne
+    Tools tools ;
+
     public Long getIdCommLine() {
         return idCommLine;
     }

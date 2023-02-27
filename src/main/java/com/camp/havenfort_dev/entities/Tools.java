@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -36,11 +37,21 @@ public class Tools implements Serializable {
     private Set<Promotion> promos ;
 
     @ManyToMany(mappedBy ="tools", cascade =CascadeType.ALL)
-
     private Set<Shop> shops ;
     @ManyToOne
     @JsonIgnore
     private Category category ;
+
+
+    @OneToMany(mappedBy = "tools", cascade = CascadeType.ALL)
+    private List<CommandLine> commandeLines;
+
+    @ManyToOne
+    private User users ;
+
+    @ManyToMany
+    private Set<Reclamation> reclamations ;
+
 
 
 }
