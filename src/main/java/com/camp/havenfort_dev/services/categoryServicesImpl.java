@@ -35,8 +35,14 @@ public class categoryServicesImpl implements ICategoryServices {
     @Override
     public Shop addShop(Shop shop){ return shopRepository.save(shop);}
 
+
     @Override
-    public Tools addTools(Tools tools){return toolsRepository.save(tools);}
+    public Tools addtoolsAndAssignTocategory(Tools tools, Long idc){
+        Category category = categoryRepository.findById(idc).orElse(null);
+        category.getTools().add(tools);
+        return toolsRepository.save(tools);}
+     /*@Override
+    public Tools addTools(Tools tools){return toolsRepository.save(tools);}*/
 
 
 
