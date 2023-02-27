@@ -24,7 +24,7 @@ public class Tools implements Serializable {
     private double price ;
     private int quantity ;
     @Enumerated(EnumType.STRING)
-    private  Condition condition ;
+    private  Condition conndition ;
     private  String description ;
     private String image ;
     @Enumerated(EnumType.STRING)
