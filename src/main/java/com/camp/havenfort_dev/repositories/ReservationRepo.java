@@ -1,4 +1,4 @@
-package repositories;
+package com.camp.havenfort_dev.repositories;
 
 import entities.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;

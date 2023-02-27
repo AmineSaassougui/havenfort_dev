@@ -1,4 +1,4 @@
-package services;
+package com.camp.havenfort_dev.services;
 
 import entities.CenterOfCamp;
 

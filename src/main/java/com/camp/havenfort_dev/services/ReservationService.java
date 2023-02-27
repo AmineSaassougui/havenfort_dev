@@ -1,10 +1,10 @@
-package services;
+package com.camp.havenfort_dev.services;
 
 import entities.Reservation;
 
 import java.util.List;
 
-public class ReservationService implements IReservationService{
+public class ReservationService implements IReservationService {
     @Override
     public Reservation addReservation(Reservation r) {
         return null;

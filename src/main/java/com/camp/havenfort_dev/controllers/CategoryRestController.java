@@ -1,4 +1,4 @@
-package com.camp.havenfort_dev.controller;
+package com.camp.havenfort_dev.controllers;
 
 
 import com.camp.havenfort_dev.entities.Category;

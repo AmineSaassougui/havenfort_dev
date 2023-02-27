@@ -15,21 +15,19 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-(class declaraion)
+
 public class Tools implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long idt;
 
-(class declaraion)
+
     private String name ;
     private double price ;
     private int quantity ;
     @Enumerated(EnumType.STRING)
-
-    @Column(name = "tools_condition")
-    private  Condition condition ;
+    private  Condition conndition ;
     private  String description ;
     private String image ;
     @Enumerated(EnumType.STRING)
