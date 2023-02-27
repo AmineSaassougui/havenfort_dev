@@ -2,6 +2,7 @@ package com.camp.havenfort_dev.entities;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 
 @Entity
@@ -18,6 +19,10 @@ public class Reclamation {
     @ManyToOne
     @JoinColumn(name="id_user",referencedColumnName = "id")
     private User etages;
+
+    @ManyToMany(mappedBy = "reclamations",cascade = CascadeType.ALL)
+    private Set<Tools> tools ;
+
 
 
     public long getId_rec() {
