@@ -1,9 +1,6 @@
 package com.camp.havenfort_dev.services;
 
 import com.camp.havenfort_dev.entities.Category;
-import com.camp.havenfort_dev.entities.Promotion;
-import com.camp.havenfort_dev.entities.Shop;
-import com.camp.havenfort_dev.entities.Tools;
 import com.camp.havenfort_dev.repositories.ICategoryRepository;
 import com.camp.havenfort_dev.repositories.IPromotionRepository;
 import com.camp.havenfort_dev.repositories.IShopRepository;
