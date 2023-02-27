@@ -1,6 +1,7 @@
 package com.camp.havenfort_dev.services;
 
-import entities.Event;
+import com.camp.havenfort_dev.entities.Event;
+
 
 import java.io.Serializable;
 import java.util.List;

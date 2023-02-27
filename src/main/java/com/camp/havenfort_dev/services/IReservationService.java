@@ -1,6 +1,7 @@
 package com.camp.havenfort_dev.services;
 
-import entities.Reservation;
+import com.camp.havenfort_dev.entities.Reservation;
+
 
 import java.io.Serializable;
 import java.util.List;
