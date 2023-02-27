@@ -1,6 +1,9 @@
 package com.camp.havenfort_dev.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -19,6 +22,12 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role ;
+    @ManyToMany
+    @JsonIgnore
+    private Set<Reservation> reservations;
+    @ManyToMany
+    @JsonIgnore
+    private Set<Event> events;
 
     public long getId() {
         return id;

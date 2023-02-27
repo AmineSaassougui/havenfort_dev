@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,4 +28,9 @@ public class Reservation {
     @ManyToOne
     @JsonIgnore
     private Event event;
+
+    @ManyToMany(mappedBy="reservations", cascade=CascadeType.ALL)
+    @JsonIgnore
+    private Set<User> users;
+
 }
