@@ -7,6 +7,8 @@ import com.camp.havenfort_dev.entities.Shop;
 import com.camp.havenfort_dev.entities.Tools;
 import com.camp.havenfort_dev.services.ICategoryServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -48,8 +50,19 @@ public class CategoryRestController {
         return  categoryServices.AssignToolsToshop(idt, idshop);
     }
 
+    @DeleteMapping("/deletetool/{idt}")
+    public ResponseEntity<?> deletetool(@PathVariable("idt") Long idt){
+        categoryServices.DeleteTool(idt);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
+    @DeleteMapping("/DeleteShop/{idshop}")
+    public  ResponseEntity<?> DeleteShop(@PathVariable("idshop") Long idshop){
+        categoryServices.DeleteShop(idshop);;
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
 
 
    /* @PostMapping("/addTools")
