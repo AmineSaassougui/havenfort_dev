@@ -18,13 +18,15 @@ public class CenterOfCamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
-    private String lieu;
+    private Long idCenterOfCamp;
+    private String nomCenter;
+    private String lieuCenter;
     private String owner;
     private Integer capacity;
     private Integer nbStaff;
     private String opening;
     private String closure;
+    private TypeCenAct typeCenter;
 
     @JsonIgnore
     @OneToMany(mappedBy="centerOfCamp", cascade=CascadeType.ALL)

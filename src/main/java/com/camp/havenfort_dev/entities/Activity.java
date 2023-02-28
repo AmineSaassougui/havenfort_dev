@@ -16,10 +16,12 @@ public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Long idActivity;
     private String type;
     private String lieu;
-
+    private Boolean archive;
+    @Enumerated(EnumType.STRING)
+    private TypeCenAct typeActivity;
     @ManyToOne
     @JsonIgnore
     private Event event;

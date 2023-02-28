@@ -18,7 +18,7 @@ public class Campsite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Long idCampsite;
     private String nomlieu;
     private String sols;
     private String distance;
