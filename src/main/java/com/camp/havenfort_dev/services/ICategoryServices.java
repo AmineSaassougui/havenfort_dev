@@ -25,4 +25,8 @@ public interface ICategoryServices {
     void DeleteTool(Long idt);
 
     void DeleteShop(Long idshop);
+
+    void DeletePromotion(Long pid);
+
+    void activatePromotion(Promotion promotion);
 }

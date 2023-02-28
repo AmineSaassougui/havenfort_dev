@@ -5,6 +5,7 @@ import com.camp.havenfort_dev.entities.Category;
 import com.camp.havenfort_dev.entities.Promotion;
 import com.camp.havenfort_dev.entities.Shop;
 import com.camp.havenfort_dev.entities.Tools;
+import com.camp.havenfort_dev.repositories.IPromotionRepository;
 import com.camp.havenfort_dev.services.ICategoryServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryRestController {
     @Autowired
     ICategoryServices categoryServices;
+    @Autowired
+    private IPromotionRepository iPromotionRepository;
 
     @PostMapping("/addCategory")
     @ResponseBody
@@ -61,6 +64,17 @@ public class CategoryRestController {
     public  ResponseEntity<?> DeleteShop(@PathVariable("idshop") Long idshop){
         categoryServices.DeleteShop(idshop);;
         return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+    @DeleteMapping("/DeletePromotion/{pid}")
+    public ResponseEntity<?> DeletePromotion(@PathVariable("pid") Long pid){
+        categoryServices.DeletePromotion(pid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/{pid}/activate")
+    public ResponseEntity<Void> activatePromotion(@PathVariable Long pid){
+        Promotion promotion = iPromotionRepository.findById(pid)
 
     }
 

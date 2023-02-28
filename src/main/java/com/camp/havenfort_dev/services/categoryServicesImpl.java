@@ -65,6 +65,18 @@ public class categoryServicesImpl implements ICategoryServices {
         shopRepository.deleteById(idshop);
     }
 
+    @Override
+    public void DeletePromotion(Long pid){
+        promotionRepository.deleteById(pid);
+
+    }
+
+    @Override
+    public void activatePromotion(Promotion promotion) {
+        promotion.setActive(true);
+        promotionRepository.save(promotion);
+    }
+
 
 
 
