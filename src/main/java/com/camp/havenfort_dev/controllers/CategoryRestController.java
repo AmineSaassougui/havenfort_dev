@@ -5,6 +5,7 @@ import com.camp.havenfort_dev.entities.Category;
 import com.camp.havenfort_dev.entities.Promotion;
 import com.camp.havenfort_dev.entities.Shop;
 import com.camp.havenfort_dev.entities.Tools;
+import com.camp.havenfort_dev.exceptions.PromotionNotFoundException;
 import com.camp.havenfort_dev.repositories.IPromotionRepository;
 import com.camp.havenfort_dev.services.ICategoryServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,7 @@ public class CategoryRestController {
 
     @DeleteMapping("/DeleteShop/{idshop}")
     public  ResponseEntity<?> DeleteShop(@PathVariable("idshop") Long idshop){
-        categoryServices.DeleteShop(idshop);;
+        categoryServices.DeleteShop(idshop);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
@@ -74,10 +75,13 @@ public class CategoryRestController {
 
     @PostMapping("/{pid}/activate")
     public ResponseEntity<Void> activatePromotion(@PathVariable Long pid){
-        Promotion promotion = iPromotionRepository.findById(pid)
+        Promotion promotion = iPromotionRepository.findById(pid).orElseThrow(()-> new PromotionNotFoundException(pid));
+        categoryServices.activatePromotion(promotion);
+        return ResponseEntity.ok().build();
+
 
     }
-
+/* .orElseThrow(() -> new PromotionNotFoundException(pid)); */
 
    /* @PostMapping("/addTools")
     @ResponseBody

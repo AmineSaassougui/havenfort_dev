@@ -22,6 +22,7 @@ public class Promotion implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long pid ;
+    private String pname ;
     private double discountAmount ;
     @Temporal(TemporalType.DATE)
     private Date startdate ;
