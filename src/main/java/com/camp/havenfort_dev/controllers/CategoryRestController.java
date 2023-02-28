@@ -42,10 +42,14 @@ public class CategoryRestController {
         categoryServices.SetAvailability(idt);
     }
 
+    @PutMapping("/Assigntoolstoshop/{idt}/{idshop}")
+    @ResponseBody
+    public Tools assign( @PathVariable("idt") Long idt, @PathVariable("idshop") Long idshop){
+        return  categoryServices.AssignToolsToshop(idt, idshop);
+    }
 
-    /*@PutMapping("/demarrer-vm/{id-vm}")
-	public void demarrerVm(@PathVariable("id-vm") int idVm){
-		vmService.demarrerInstanceUser(idVm);*/
+
+
 
 
    /* @PostMapping("/addTools")

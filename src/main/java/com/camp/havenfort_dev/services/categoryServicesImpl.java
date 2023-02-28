@@ -39,12 +39,20 @@ public class categoryServicesImpl implements ICategoryServices {
         category.getTools().add(tools);
         return toolsRepository.save(tools);}
 
+
+    @Override
+    public Tools AssignToolsToshop(Long idt, Long idshop) {
+        Tools tools = toolsRepository.findById(idt).orElse(null);
+        Shop shop = shopRepository.findById(idshop).orElse(null);
+        shop.getTools();
+        return toolsRepository.save(tools);
+    }
+
     @Override
     public void SetAvailability(Long idt){
         Tools tl = toolsRepository.findById(idt).orElse(null);
         tl.setAvailability(Availability.OUT_OF_STOCK);
         toolsRepository.save(tl);
-
     }
 
      /*@Override

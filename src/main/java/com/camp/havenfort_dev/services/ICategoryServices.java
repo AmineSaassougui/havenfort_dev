@@ -18,5 +18,7 @@ public interface ICategoryServices {
 
     Tools addtoolsAndAssignTocategory(Tools tools, Long idc);
 
+    Tools AssignToolsToshop(Long idt, Long idshop);
+
     void SetAvailability(Long idt);
 }
