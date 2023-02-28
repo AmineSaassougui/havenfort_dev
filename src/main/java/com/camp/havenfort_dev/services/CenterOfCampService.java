@@ -1,17 +1,15 @@
 package com.camp.havenfort_dev.services;
 
-
-public class CenterOfCampService {
-
 import com.camp.havenfort_dev.entities.CenterOfCamp;
 import com.camp.havenfort_dev.entities.Event;
 import com.camp.havenfort_dev.exception.UserNotFoundException;
+import com.camp.havenfort_dev.repositories.CenterOfCampRepo;
 import com.camp.havenfort_dev.repositories.EventRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.camp.havenfort_dev.repositories.CenterOfCampRepo;
 
 import java.util.List;
+
 @Service
 public class CenterOfCampService implements ICenterOfCampService{
     @Autowired

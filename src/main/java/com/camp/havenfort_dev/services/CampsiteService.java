@@ -1,8 +1,6 @@
 package com.camp.havenfort_dev.services;
 
 
-public class CampsiteService {
-
 import com.camp.havenfort_dev.entities.Campsite;
 import com.camp.havenfort_dev.entities.Event;
 import com.camp.havenfort_dev.exception.UserNotFoundException;
@@ -12,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class CampsiteService implements ICampsiteService{
     @Autowired

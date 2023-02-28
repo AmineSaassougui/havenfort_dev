@@ -51,9 +51,5 @@ public class ReservationService implements IReservationService{
     public int getNbrReservationEvent(Long idEvent) {
         return 0;
     }
-    ///@Override
-    //	public int getNbrRendezVousMedecin(Long idMedecin) {
-    //		Medecin medecin = medecinRepository.findById(idMedecin).orElse(null);
-    //		return medecin.getMesRendezVous().size();
-    //	}
+
 }

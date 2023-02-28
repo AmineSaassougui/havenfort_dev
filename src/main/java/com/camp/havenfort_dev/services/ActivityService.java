@@ -1,8 +1,6 @@
 package com.camp.havenfort_dev.services;
 
 
-public class ActivityService {
-
 import com.camp.havenfort_dev.entities.Activity;
 import com.camp.havenfort_dev.entities.CenterOfCamp;
 import com.camp.havenfort_dev.entities.Event;
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
 
 @Service
 public class ActivityService implements IActivityService{

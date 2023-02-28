@@ -1,22 +1,21 @@
 package com.camp.havenfort_dev.controllers;
 
 
-public class Controller {
-
 import com.camp.havenfort_dev.entities.*;
 import com.camp.havenfort_dev.services.*;
-
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 @RequestMapping("/Camp")
 @RestController
 @AllArgsConstructor
 public class Controller {
+
+
+
     IReservationService iReservationService;
     IEventService iEventService;
     ICenterOfCampService iCenterOfCampService;
