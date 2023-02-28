@@ -31,6 +31,23 @@ public class CategoryRestController {
     @ResponseBody
     public Shop addShop(@RequestBody Shop shop){return categoryServices.addShop(shop);}
 
+    @PostMapping("/addtools/{idc}")
+    @ResponseBody
+    public Tools addToolsToCategory(@RequestBody Tools tools, @PathVariable("idc") Long idc){
+        return categoryServices.addtoolsAndAssignTocategory(tools, idc);
+    }
+
+    @PutMapping("/setAvailability/{idt}")
+    public void changeAvailability(@PathVariable("idt") Long idt){
+        categoryServices.SetAvailability(idt);
+    }
+
+
+    /*@PutMapping("/demarrer-vm/{id-vm}")
+	public void demarrerVm(@PathVariable("id-vm") int idVm){
+		vmService.demarrerInstanceUser(idVm);*/
+
+
    /* @PostMapping("/addTools")
     @ResponseBody
     public Tools addTools(@RequestBody Tools tools){return categoryServices.addTools(tools);}*/

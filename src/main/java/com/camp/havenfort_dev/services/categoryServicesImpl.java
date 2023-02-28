@@ -1,9 +1,6 @@
 package com.camp.havenfort_dev.services;
 
-import com.camp.havenfort_dev.entities.Category;
-import com.camp.havenfort_dev.entities.Promotion;
-import com.camp.havenfort_dev.entities.Shop;
-import com.camp.havenfort_dev.entities.Tools;
+import com.camp.havenfort_dev.entities.*;
 import com.camp.havenfort_dev.repositories.ICategoryRepository;
 import com.camp.havenfort_dev.repositories.IPromotionRepository;
 import com.camp.havenfort_dev.repositories.IShopRepository;
@@ -41,10 +38,15 @@ public class categoryServicesImpl implements ICategoryServices {
         Category category = categoryRepository.findById(idc).orElse(null);
         category.getTools().add(tools);
         return toolsRepository.save(tools);}
+
+    @Override
+    public void SetAvailability(Long idt){
+        Tools tl = toolsRepository.findById(idt).orElse(null);
+        tl.setAvailability(Availability.OUT_OF_STOCK);
+        toolsRepository.save(tl);
+
+    }
+
      /*@Override
     public Tools addTools(Tools tools){return toolsRepository.save(tools);}*/
-
-
-
-
 }
