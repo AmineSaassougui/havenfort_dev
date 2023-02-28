@@ -54,6 +54,32 @@ public class categoryServicesImpl implements ICategoryServices {
         tl.setAvailability(Availability.OUT_OF_STOCK);
         toolsRepository.save(tl);
     }
+    @Override
+    public  void DeleteTool(Long idt){
+        toolsRepository.deleteById(idt);
+    }
+
+
+    @Override
+    public void DeleteShop(Long idshop){
+        shopRepository.deleteById(idshop);
+    }
+
+    @Override
+    public void DeletePromotion(Long pid){
+        promotionRepository.deleteById(pid);
+
+    }
+
+    @Override
+    public void activatePromotion(Promotion promotion) {
+        promotion.setActive(true);
+        promotionRepository.save(promotion);
+    }
+
+
+
+
 
      /*@Override
     public Tools addTools(Tools tools){return toolsRepository.save(tools);}*/

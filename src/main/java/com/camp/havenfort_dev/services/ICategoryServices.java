@@ -21,4 +21,12 @@ public interface ICategoryServices {
     Tools AssignToolsToshop(Long idt, Long idshop);
 
     void SetAvailability(Long idt);
+
+    void DeleteTool(Long idt);
+
+    void DeleteShop(Long idshop);
+
+    void DeletePromotion(Long pid);
+
+    void activatePromotion(Promotion promotion);
 }
