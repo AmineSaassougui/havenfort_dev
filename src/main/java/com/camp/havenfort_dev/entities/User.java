@@ -34,6 +34,11 @@ public class User {
     @JsonIgnore
     private Set<Event> events;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "userPosts")
+    private Set<Post> posts;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "userComments")
+    private Set<Comment> comments;
 
 
     public long getId() {
