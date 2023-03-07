@@ -30,6 +30,7 @@ public class Tools implements Serializable {
     @Enumerated(EnumType.STRING)
     private  Condition conndition ;
     private  String description ;
+    private String reviews;
     private String image ;
     @Enumerated(EnumType.STRING)
     private  Availability availability ;

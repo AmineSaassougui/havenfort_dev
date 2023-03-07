@@ -9,6 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.*;
+
+
 @Service
 @Slf4j
 public class categoryServicesImpl implements ICategoryServices {
@@ -76,6 +80,58 @@ public class categoryServicesImpl implements ICategoryServices {
         promotion.setActive(true);
         promotionRepository.save(promotion);
     }
+
+    @Override
+    public List<Tools> getToolsSortedByReviews(Long idshop){
+        Optional<Shop> optionalShop = shopRepository.findById(idshop);
+
+        if (optionalShop.isPresent()) {
+            Shop shop = optionalShop.get();
+            List<Tools> tools = (List<Tools>) shop.getTools();
+            Collections.sort(tools, new Comparator<Tools>() {
+                @Override
+                public int compare(Tools t1, Tools t2) {
+                    List<String> reviews1 = Collections.singletonList(t1.getReviews());
+                    List<String> reviews2 = Collections.singletonList(t2.getReviews());
+
+                    if (reviews1.size() == 0 && reviews2.size() == 0) {
+                        return 0;
+                    } else if (reviews1.size() == 0) {
+                        return 1;
+                    } else if (reviews2.size() == 0) {
+                        return -1;
+                    } else {
+                        double avg1 = calculateAverageReview(reviews1);
+                        double avg2 = calculateAverageReview(reviews2);
+                        return Double.compare(avg2, avg1);
+                    }
+                }
+
+                private double calculateAverageReview(List<String> reviews) {
+                    double totalScore = 0;
+                    for (String review : reviews) {
+                        totalScore += Double.parseDouble(review);
+                    }
+                    return totalScore / reviews.size();
+                }
+            });
+            return tools;
+        } else {
+            throw new EntityNotFoundException("Shop not found");
+        }
+    }
+
+    @Override
+    public List<Tools> getToolsSortedByHighestPrice(Long idshop) {
+        List<Tools> tools = toolsRepository.findToolsByShopId(idshop);
+        tools.sort(Comparator.comparing(Tools::getPrice).reversed());
+        return tools;
+    }
+
+
+
+
+
 
 
 

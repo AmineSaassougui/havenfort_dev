@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/category")
 public class CategoryRestController {
@@ -79,8 +81,22 @@ public class CategoryRestController {
         categoryServices.activatePromotion(promotion);
         return ResponseEntity.ok().build();
 
-
     }
+
+
+    @GetMapping("/{idshop}/sorted")
+    public List<Tools> getToolsSortedByReviews(@PathVariable Long idshop) {
+        return categoryServices.getToolsSortedByReviews(idshop);
+    }
+
+    @GetMapping("/highest-price/{idshop}")
+    public List<Tools> getToolsSortedByHighestPrice(@PathVariable Long idshop) {
+        return categoryServices.getToolsSortedByHighestPrice(idshop);
+    }
+
+
+
+
 /* .orElseThrow(() -> new PromotionNotFoundException(pid)); */
 
    /* @PostMapping("/addTools")

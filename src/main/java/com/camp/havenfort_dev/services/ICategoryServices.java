@@ -5,6 +5,8 @@ import com.camp.havenfort_dev.entities.Promotion;
 import com.camp.havenfort_dev.entities.Shop;
 import com.camp.havenfort_dev.entities.Tools;
 
+import java.util.List;
+
 public interface ICategoryServices {
     Category addCategory(Category category);
 
@@ -29,4 +31,8 @@ public interface ICategoryServices {
     void DeletePromotion(Long pid);
 
     void activatePromotion(Promotion promotion);
+
+    List<Tools> getToolsSortedByReviews(Long idshop);
+
+    List<Tools> getToolsSortedByHighestPrice(Long idshop);
 }
