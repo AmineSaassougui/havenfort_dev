@@ -7,10 +7,12 @@ import com.camp.havenfort_dev.repositories.IShopRepository;
 import com.camp.havenfort_dev.repositories.IToolsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 
 @Service
@@ -80,8 +82,81 @@ public class categoryServicesImpl implements ICategoryServices {
         promotion.setActive(true);
         promotionRepository.save(promotion);
     }
+    @Override
+    public void StopPromotion(Promotion promotion){
+        promotion.setActive(false);
+        promotionRepository.save(promotion) ;
+    }
 
     @Override
+    public List<Tools> GetTools() {
+        return toolsRepository.findAll();
+    }
+
+    @Override
+    // Generate a random promo code
+    public String generatePromoCode() {
+        // Generate a random alphanumeric string of length 6
+        int length = 6;
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random rng = new Random();
+        char[] code = new char[length];
+        for (int i = 0; i < length; i++) {
+            code[i] = characters.charAt(rng.nextInt(characters.length()));
+        }
+        return new String(code);
+    }
+
+    @Override
+    // Add a new promotion with a generated promo code
+    public Promotion addPromotionWithGeneratedCode(Promotion promotion) {
+        String promoCode = generatePromoCode();
+        promotion.setPromoCode(promoCode);
+        return promotionRepository.save(promotion);
+    }
+
+    @Override
+    public Shop Assignpromotoshop(Long pid, Long idshop) {
+        Shop shop = shopRepository.findById(idshop).orElse(null);
+        Promotion Promos = promotionRepository.findById(pid).orElse(null);
+        shop.getPromos().add(Promos);
+        return shopRepository.save(shop);
+    }
+
+    @Override
+    public List<Promotion> getAllPromotions() {
+        return promotionRepository.findAll();
+    }
+
+    @Override
+    public void disableExpiredPromotions() {
+        List<Promotion> promotions = promotionRepository.findAll();
+        Date currentDate = new Date();
+        for (Promotion promotion : promotions) {
+            if (promotion.getEnddate().before(currentDate)) {
+                promotion.setActive(false);
+                promotionRepository.save(promotion);
+                for (Shop shop : promotion.getShops()) { // i can delete this if i dont want to remove promotions from db
+                    shop.getPromos().remove(promotion); // i can delete this if i dont want to remove promotions from db
+                    shopRepository.save(shop); // i can delete this if i dont want to remove promotions from db
+                }// i can delete this if i dont want to remove promotions from db
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*@Override
     public List<Tools> getToolsSortedByReviews(Long idshop){
         Optional<Shop> optionalShop = shopRepository.findById(idshop);
 
@@ -126,7 +201,20 @@ public class categoryServicesImpl implements ICategoryServices {
         List<Tools> tools = toolsRepository.findToolsByShopId(idshop);
         tools.sort(Comparator.comparing(Tools::getPrice).reversed());
         return tools;
+    }*/
+
+
+  /*  @Override
+    public Tools requestAddTool(Long idshop, Tools tool){
+        // Set the tool status to PENDING
+        tool.setStatus(ToolStatus.PENDING);
+        tool.setShops(new Shop(idshop));
+        return toolsRepository.save(tool);
     }
+
+    public List<Tools> getPendingTools(Long shopId) {
+        return toolsRepository.findToolsByShopIdAndStatus(shopId, ToolStatus.PENDING);
+    }*/
 
 
 

@@ -31,13 +31,9 @@ public class Promotion implements Serializable {
     private boolean isActive ;
     @ManyToMany
     private Set<Tools> tools ;
-
-
-
-
-
-
-
+    @ManyToMany
+    private Set<Shop> shops;
+    private String promoCode;
 
 
 }

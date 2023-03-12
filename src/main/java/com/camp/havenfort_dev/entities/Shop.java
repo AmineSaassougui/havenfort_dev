@@ -26,9 +26,13 @@ public class Shop implements Serializable {
     private String nameshop ;
     private String address ;
     private String phonenumber ;
+    private String shopdescription ;
 
     @ManyToMany
     private Set<Tools> tools ;
+    @ManyToMany(mappedBy ="shops", cascade =CascadeType.ALL)
+    private Set<Promotion> promos ;
+
 
 
 

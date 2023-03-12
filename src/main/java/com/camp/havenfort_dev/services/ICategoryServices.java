@@ -32,7 +32,24 @@ public interface ICategoryServices {
 
     void activatePromotion(Promotion promotion);
 
-    List<Tools> getToolsSortedByReviews(Long idshop);
+    void StopPromotion(Promotion promotion);
 
-    List<Tools> getToolsSortedByHighestPrice(Long idshop);
+    List<Tools> GetTools();
+
+    // Generate a random promo code
+
+    String generatePromoCode();
+
+    // Add a new promotion with a generated promo code
+    Promotion addPromotionWithGeneratedCode(Promotion promotion);
+
+    Shop Assignpromotoshop(Long pid, Long idshop);
+
+    List<Promotion> getAllPromotions();
+
+    void disableExpiredPromotions();
+
+ /*   List<Tools> getToolsSortedByReviews(Long idshop);
+
+    List<Tools> getToolsSortedByHighestPrice(Long idshop);*/
 }
