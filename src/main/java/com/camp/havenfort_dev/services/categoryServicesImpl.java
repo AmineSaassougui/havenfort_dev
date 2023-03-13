@@ -8,11 +8,12 @@ import com.camp.havenfort_dev.repositories.IToolsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import javax.persistence.EntityNotFoundException;
+import java.util.*;
 
 
 @Service
@@ -41,18 +42,36 @@ public class categoryServicesImpl implements ICategoryServices {
 
     @Override
     public Tools addtoolsAndAssignTocategory(Tools tools, Long idc){
-        Category category = categoryRepository.findById(idc).orElse(null);
-        category.getTools().add(tools);
+        Category category = categoryRepository.findById(idc).orElseThrow(() -> new NotFoundException("Category not found"));
+        tools.setCategory(category);
         return toolsRepository.save(tools);}
+
 
 
     @Override
     public Tools AssignToolsToshop(Long idt, Long idshop) {
-        Tools tools = toolsRepository.findById(idt).orElse(null);
-        Shop shop = shopRepository.findById(idshop).orElse(null);
-        shop.getTools();
+        Tools tools = toolsRepository.findById(idt).orElseThrow(() -> new NotFoundException("Tool not found with ID: " + idt));
+        Shop shop = shopRepository.findById(idshop).orElseThrow(() -> new NotFoundException("Shop not found with ID: " + idshop));
+
+        Set<Shop> shops = tools.getShops();
+        shops.add(shop);
+        tools.setShops(shops);
+
+        shopRepository.save(shop);
+
         return toolsRepository.save(tools);
     }
+
+    /*public Tools assignToolToShop(Long idt, Long idshop) {
+    Tools tools = toolsRepository.findById(idt).orElse(null);
+    Shop shop = shopRepository.findById(idshop).orElse(null);
+    if (shop != null && tools != null) {
+        shop.getTools().add(tools);
+        tools.setShop(shop);
+        shopRepository.save(shop);
+    }
+    return tools;
+}*/
 
     @Override
     public void SetAvailability(Long idt){
@@ -92,6 +111,9 @@ public class categoryServicesImpl implements ICategoryServices {
     public List<Tools> GetTools() {
         return toolsRepository.findAll();
     }
+
+
+
 
     @Override
     // Generate a random promo code
@@ -144,6 +166,81 @@ public class categoryServicesImpl implements ICategoryServices {
         }
     }
 
+    @Override
+    public void DeleteCategory(Long idc) {categoryRepository.deleteById(idc);}
+
+    @Override
+    public List<Category> GetCategories() {return categoryRepository.findAll();}
+
+    @Override
+    public List<Shop> GetShops() {return shopRepository.findAll();}
+
+    @Override
+    public void RemovetoolFrominventory(Long idshop, Long idt){
+        Shop shop = shopRepository.findById(idshop).orElseThrow(() -> new EntityNotFoundException("Shop not found"));
+        Tools tools = toolsRepository.findById(idt).orElseThrow(() -> new EntityNotFoundException("Tool not found"));
+        Set<Tools> inventory = shop.getTools();
+        if (!inventory.contains(tools))
+            {throw new IllegalArgumentException("the selected Tool is not in the  inventory");}
+        inventory.remove(tools);
+        shop.setTools(inventory);
+        shopRepository.save(shop);}
+
+
+
+
+
+    @Override
+    public Tools applyPromotionToToolInShop(Long idshop, Long idt, Long pid){
+        Shop shop = shopRepository.findById(idshop).orElseThrow(() -> new NotFoundException("Shop not found"));
+        Tools tool = shop.getTools().stream().filter(t -> t.getIdt().equals(idt)).findFirst().orElseThrow(() -> new NotFoundException("Tool not found in shop"));
+        Promotion promotion = promotionRepository.findById(pid).orElseThrow(() -> new NotFoundException("Promotion not found"));
+        if (!promotion.isActive()) {throw new IllegalStateException("Promotion is not active");}
+        if (!promotion.getTools().contains(tool)) {throw new IllegalStateException("Promotion does not apply to the selected tool");}
+        double originalPrice = tool.getPrice();
+        double discount = promotion.getDiscountAmount();
+        double newPrice = originalPrice - discount;
+        if (newPrice < 0) {newPrice = 0;}
+        tool.setPrice(newPrice);
+        toolsRepository.save(tool);
+        return tool;}
+
+
+    @Override
+    public List<Tools> advancedSearch(String keyword, Long idc, String[] brand, Double minPrice, Double maxPrice, Boolean IN_STOCK)
+    List<Tools> tools = new ArrayList<>();
+    Specification<Tools> spec = Specification.where(null);
+    if (keyword != null) {
+        spec = spec.and(ToolsSp.containsInAnyColumn(keyword));
+    }
+
+
+
+
+    /*public List<Tool> advancedSearch(String keyword, Long categoryId, String[] brand, Double minPrice, Double maxPrice, Boolean inStock) {
+    List<Tool> tools = new ArrayList<>();
+    Specification<Tool> spec = Specification.where(null);
+    if (keyword != null) {
+        spec = spec.and(ToolSpecifications.containsInAnyColumn(keyword));
+    }
+    if (categoryId != null) {
+        spec = spec.and(ToolSpecifications.hasCategory(categoryId));
+    }
+    if (brand != null && brand.length > 0) {
+        spec = spec.and(ToolSpecifications.hasBrands(Arrays.asList(brand)));
+    }
+    if (minPrice != null) {
+        spec = spec.and(ToolSpecifications.hasMinPrice(minPrice));
+    }
+    if (maxPrice != null) {
+        spec = spec.and(ToolSpecifications.hasMaxPrice(maxPrice));
+    }
+    if (inStock != null && inStock) {
+        spec = spec.and(ToolSpecifications.isInStock());
+    }
+    tools = toolRepository.findAll(spec);
+    return tools;
+}*/
 
 
 
@@ -153,6 +250,27 @@ public class categoryServicesImpl implements ICategoryServices {
 
 
 
+
+
+
+    /*public Tool applyPromotionToToolInShop(Long toolId, Long shopId, Long promotionId) {
+        Tool tool = toolRepository.findById(toolId).orElseThrow(() -> new ResourceNotFoundException("Tool", "id", toolId));
+        Shop shop = tool.getShops().stream().filter(s -> s.getIdshop().equals(shopId)).findFirst().orElseThrow(() -> new ResourceNotFoundException("Shop", "id", shopId));
+        Promotion promotion = shop.getPromos().stream().filter(p -> p.getPid().equals(promotionId)).findFirst().orElseThrow(() -> new ResourceNotFoundException("Promotion", "id", promotionId));
+
+        double originalPrice = tool.getPrice();
+        double discountAmount = promotion.getDiscountAmount();
+
+        if (discountAmount > originalPrice) {
+            throw new BadRequestException("Discount amount cannot be greater than the original price.");
+        }
+
+        double discountedPrice = originalPrice - discountAmount;
+
+        tool.setPrice(discountedPrice);
+
+        return toolRepository.save(tool);
+    }*/
 
 
 

@@ -16,8 +16,6 @@ public interface ICategoryServices {
 
     Shop addShop(Shop shop);
 
-
-
     Tools addtoolsAndAssignTocategory(Tools tools, Long idc);
 
     Tools AssignToolsToshop(Long idt, Long idshop);
@@ -48,6 +46,18 @@ public interface ICategoryServices {
     List<Promotion> getAllPromotions();
 
     void disableExpiredPromotions();
+
+    void DeleteCategory(Long idc);
+
+    List<Category> GetCategories();
+
+    List<Shop> GetShops();
+
+    void RemovetoolFrominventory(Long idshop, Long idt);
+
+
+
+    Tools applyPromotionToToolInShop(Long idshop, Long idt, Long pid);
 
  /*   List<Tools> getToolsSortedByReviews(Long idshop);
 
