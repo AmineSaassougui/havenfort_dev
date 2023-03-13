@@ -1,8 +1,14 @@
 package com.camp.havenfort_dev.entity;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
+@Table(name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")
+        })
 public class User {
 
     @Id
@@ -12,13 +18,27 @@ public class User {
     private String firstName ;
     private String lastName ;
     private String email ;
-    private String userName ;
+    private String username ;
     private String password ;
 
     private boolean enabled;
 
-    @Enumerated(EnumType.STRING)
-    private Role role ;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(	name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User() {
+
+    }
 
     public long getId() {
         return id;
@@ -53,11 +73,11 @@ public class User {
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 
     public String getPassword() {
@@ -76,25 +96,11 @@ public class User {
         this.enabled = enabled;
     }
 
-    public Role getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", role=" + role +
-                '}';
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
