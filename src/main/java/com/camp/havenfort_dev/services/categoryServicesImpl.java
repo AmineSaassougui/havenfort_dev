@@ -7,8 +7,6 @@ import com.camp.havenfort_dev.repositories.IShopRepository;
 import com.camp.havenfort_dev.repositories.IToolsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -44,6 +42,8 @@ public class categoryServicesImpl implements ICategoryServices {
     public Tools addtoolsAndAssignTocategory(Tools tools, Long idc){
         Category category = categoryRepository.findById(idc).orElseThrow(() -> new NotFoundException("Category not found"));
         tools.setCategory(category);
+        tools.setConndition(Condition.NEW);
+        tools.setStatus(ToolStatus.PENDING);
         return toolsRepository.save(tools);}
 
 
@@ -57,21 +57,14 @@ public class categoryServicesImpl implements ICategoryServices {
         shops.add(shop);
         tools.setShops(shops);
 
-        shopRepository.save(shop);
-
-        return toolsRepository.save(tools);
-    }
-
-    /*public Tools assignToolToShop(Long idt, Long idshop) {
-    Tools tools = toolsRepository.findById(idt).orElse(null);
-    Shop shop = shopRepository.findById(idshop).orElse(null);
-    if (shop != null && tools != null) {
         shop.getTools().add(tools);
-        tools.setShop(shop);
+
+        toolsRepository.save(tools);
         shopRepository.save(shop);
-    }
-    return tools;
-}*/
+
+        return tools;}
+
+
 
     @Override
     public void SetAvailability(Long idt){
@@ -137,13 +130,41 @@ public class categoryServicesImpl implements ICategoryServices {
         return promotionRepository.save(promotion);
     }
 
-    @Override
+   /* @Override
     public Shop Assignpromotoshop(Long pid, Long idshop) {
         Shop shop = shopRepository.findById(idshop).orElse(null);
         Promotion Promos = promotionRepository.findById(pid).orElse(null);
+        Set<Shop> shops = Promos.getShops();
+        shops.add(shop);
+        Promos.setShops(shops);
         shop.getPromos().add(Promos);
+        promotionRepository.save(Promos);
         return shopRepository.save(shop);
-    }
+    }*/
+   @Override
+    public Shop assignPromotionToShopandtools(Long pid, Long idshop, Long idt) {
+       Promotion promotion = promotionRepository.findById(pid).orElse(null);
+       Shop shop = shopRepository.findById(idshop).orElse(null);
+       if (promotion == null || shop == null) {
+           return null;
+       }
+       Set<Shop> shops = promotion.getShops();
+       shops.add(shop);
+       promotion.setShops(shops);
+       shop.getPromos().add(promotion);
+       Tools tool = toolsRepository.findById(idt).orElse(null);
+       if (tool == null || !shop.getTools().contains(tool)) {
+           return null;
+       }
+       tool.getPromos().add(promotion);
+       promotion.getTools().add(tool);
+       promotionRepository.save(promotion);
+       toolsRepository.save(tool);
+       return shopRepository.save(shop);
+   }
+
+
+
 
     @Override
     public List<Promotion> getAllPromotions() {
@@ -205,115 +226,38 @@ public class categoryServicesImpl implements ICategoryServices {
         toolsRepository.save(tool);
         return tool;}
 
-
-    @Override
-    public List<Tools> advancedSearch(String keyword, Long idc, String[] brand, Double minPrice, Double maxPrice, Boolean IN_STOCK)
-    List<Tools> tools = new ArrayList<>();
-    Specification<Tools> spec = Specification.where(null);
-    if (keyword != null) {
-        spec = spec.and(ToolsSp.containsInAnyColumn(keyword));
-    }
-
-
-
-
-    /*public List<Tool> advancedSearch(String keyword, Long categoryId, String[] brand, Double minPrice, Double maxPrice, Boolean inStock) {
-    List<Tool> tools = new ArrayList<>();
-    Specification<Tool> spec = Specification.where(null);
-    if (keyword != null) {
-        spec = spec.and(ToolSpecifications.containsInAnyColumn(keyword));
-    }
-    if (categoryId != null) {
-        spec = spec.and(ToolSpecifications.hasCategory(categoryId));
-    }
-    if (brand != null && brand.length > 0) {
-        spec = spec.and(ToolSpecifications.hasBrands(Arrays.asList(brand)));
-    }
-    if (minPrice != null) {
-        spec = spec.and(ToolSpecifications.hasMinPrice(minPrice));
-    }
-    if (maxPrice != null) {
-        spec = spec.and(ToolSpecifications.hasMaxPrice(maxPrice));
-    }
-    if (inStock != null && inStock) {
-        spec = spec.and(ToolSpecifications.isInStock());
-    }
-    tools = toolRepository.findAll(spec);
-    return tools;
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-    /*public Tool applyPromotionToToolInShop(Long toolId, Long shopId, Long promotionId) {
-        Tool tool = toolRepository.findById(toolId).orElseThrow(() -> new ResourceNotFoundException("Tool", "id", toolId));
-        Shop shop = tool.getShops().stream().filter(s -> s.getIdshop().equals(shopId)).findFirst().orElseThrow(() -> new ResourceNotFoundException("Shop", "id", shopId));
-        Promotion promotion = shop.getPromos().stream().filter(p -> p.getPid().equals(promotionId)).findFirst().orElseThrow(() -> new ResourceNotFoundException("Promotion", "id", promotionId));
-
-        double originalPrice = tool.getPrice();
-        double discountAmount = promotion.getDiscountAmount();
-
-        if (discountAmount > originalPrice) {
-            throw new BadRequestException("Discount amount cannot be greater than the original price.");
-        }
-
-        double discountedPrice = originalPrice - discountAmount;
-
-        tool.setPrice(discountedPrice);
-
-        return toolRepository.save(tool);
-    }*/
-
-
-
-    /*@Override
-    public List<Tools> getToolsSortedByReviews(Long idshop){
-        Optional<Shop> optionalShop = shopRepository.findById(idshop);
-
-        if (optionalShop.isPresent()) {
-            Shop shop = optionalShop.get();
-            List<Tools> tools = (List<Tools>) shop.getTools();
-            Collections.sort(tools, new Comparator<Tools>() {
-                @Override
-                public int compare(Tools t1, Tools t2) {
-                    List<String> reviews1 = Collections.singletonList(t1.getReviews());
-                    List<String> reviews2 = Collections.singletonList(t2.getReviews());
-
-                    if (reviews1.size() == 0 && reviews2.size() == 0) {
-                        return 0;
-                    } else if (reviews1.size() == 0) {
-                        return 1;
-                    } else if (reviews2.size() == 0) {
-                        return -1;
-                    } else {
-                        double avg1 = calculateAverageReview(reviews1);
-                        double avg2 = calculateAverageReview(reviews2);
-                        return Double.compare(avg2, avg1);
-                    }
-                }
-
-                private double calculateAverageReview(List<String> reviews) {
-                    double totalScore = 0;
-                    for (String review : reviews) {
-                        totalScore += Double.parseDouble(review);
-                    }
-                    return totalScore / reviews.size();
-                }
-            });
+        @Override
+        public List<Tools> searchTools(String keyword) {
+            List<Tools> tools = toolsRepository.findByKeyword(keyword);
             return tools;
-        } else {
-            throw new EntityNotFoundException("Shop not found");
         }
-    }
+        @Override
+        public List<Shop> Searchshops(String keyword) {
+        List<Shop> shops = shopRepository.findShopsBykeyword(keyword);
+        return shops;
+        }
 
+        @Override
+        public Tools FindtoolsById(Long idt){
+        return toolsRepository.findById(idt).orElseThrow(() -> new NotFoundException("tool with this id "+idt+"is not found "));
+        }
+        @Override
+        public  Category FindCategorieById(Long idc){
+        return categoryRepository.findById(idc).orElseThrow(() -> new NotFoundException("category with this id "+idc+"is not found "));
+        }
+        @Override
+        public Shop FindShopById(Long idshop){
+        return shopRepository.findById(idshop).orElseThrow(() -> new NotFoundException("shop with this id "+idshop+"is not found "));
+        }
+        @Override
+        public Promotion FindPromotionById(Long pid){
+       return promotionRepository.findById(pid).orElseThrow(() -> new NotFoundException("promotion with this id "+pid+"is not found "));
+        }
+
+
+
+
+    /*
     @Override
     public List<Tools> getToolsSortedByHighestPrice(Long idshop) {
         List<Tools> tools = toolsRepository.findToolsByShopId(idshop);
@@ -322,13 +266,7 @@ public class categoryServicesImpl implements ICategoryServices {
     }*/
 
 
-  /*  @Override
-    public Tools requestAddTool(Long idshop, Tools tool){
-        // Set the tool status to PENDING
-        tool.setStatus(ToolStatus.PENDING);
-        tool.setShops(new Shop(idshop));
-        return toolsRepository.save(tool);
-    }
+  /*
 
     public List<Tools> getPendingTools(Long shopId) {
         return toolsRepository.findToolsByShopIdAndStatus(shopId, ToolStatus.PENDING);

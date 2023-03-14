@@ -37,9 +37,12 @@ public class Tools implements Serializable {
     @Enumerated(EnumType.STRING)
     private  Availability availability ;
     @ManyToMany(mappedBy ="tools", cascade =CascadeType.ALL)
+    @JsonIgnore
     private Set<Promotion> promos ;
 
+
     @ManyToMany(mappedBy ="tools", cascade =CascadeType.ALL)
+    @JsonIgnore
     private Set<Shop> shops ;
     @ManyToOne
     @JsonIgnore
@@ -53,6 +56,7 @@ public class Tools implements Serializable {
     private User users ;
 
     @ManyToMany
+    @JsonIgnore
     private Set<Reclamation> reclamations ;
 
 

@@ -1,5 +1,6 @@
 package com.camp.havenfort_dev.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,8 +31,10 @@ public class Promotion implements Serializable {
     private Date enddate ;
     private boolean isActive ;
     @ManyToMany
+    @JsonIgnore
     private Set<Tools> tools ;
     @ManyToMany
+    @JsonIgnore
     private Set<Shop> shops;
     private String promoCode;
 

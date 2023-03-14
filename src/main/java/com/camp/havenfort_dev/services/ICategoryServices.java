@@ -41,7 +41,9 @@ public interface ICategoryServices {
     // Add a new promotion with a generated promo code
     Promotion addPromotionWithGeneratedCode(Promotion promotion);
 
-    Shop Assignpromotoshop(Long pid, Long idshop);
+
+
+    Shop assignPromotionToShopandtools(Long pid, Long idshop, Long idt);
 
     List<Promotion> getAllPromotions();
 
@@ -59,7 +61,16 @@ public interface ICategoryServices {
 
     Tools applyPromotionToToolInShop(Long idshop, Long idt, Long pid);
 
- /*   List<Tools> getToolsSortedByReviews(Long idshop);
+    List<Tools> searchTools(String keyword);
 
-    List<Tools> getToolsSortedByHighestPrice(Long idshop);*/
+
+    List<Shop> Searchshops(String keyword);
+
+    Tools FindtoolsById(Long idt);
+
+    Category FindCategorieById(Long idc);
+
+    Shop FindShopById(Long idshop);
+
+    Promotion FindPromotionById(Long pid);
 }
