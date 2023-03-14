@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/Marketplace")
 public class CategoryRestController {
     @Autowired
     ICategoryServices categoryServices;
@@ -23,7 +23,7 @@ public class CategoryRestController {
     @Autowired
     private Userrepository userrepository;
 //////////////////////////////////  Categorie code ///////////////
-            @PostMapping("/addCategory")
+            @PostMapping("/addCategory")//http://localhost:8089/havenfort/Marketplace/addCategory  "cname": "testtent"
             @ResponseBody
             public Category addCategory(@RequestBody Category category){return categoryServices.addCategory(category);}
 
@@ -31,18 +31,18 @@ public class CategoryRestController {
             @ResponseBody
             public Category updateCategory(@RequestBody Category category){return categoryServices.updateCategory(category);}
 
-            @DeleteMapping("/DeleteCategory/{idc}")
+            @DeleteMapping("/DeleteCategory/{idc}")//http://localhost:8089/havenfort/Marketplace/DeleteCategory/12
             public ResponseEntity<?> DeleteCategory (@PathVariable ("idc") Long idc){
                 categoryServices.DeleteCategory(idc) ;
                 return new ResponseEntity<>(HttpStatus.OK);}
 
-            @GetMapping("/GetCategories")
+            @GetMapping("/GetCategories")//http://localhost:8089/havenfort/Marketplace/GetCategories
             public List<Category> Getcategories(){
                 return categoryServices.GetCategories() ;
             }
 
 
-            @GetMapping("/findcategoriebyid/{idc}")
+            @GetMapping("/findcategoriebyid/{idc}") //http://localhost:8089/havenfort/Marketplace/findcategoriebyid/11
             public ResponseEntity<Category> FindCategorieById(@PathVariable("idc") Long idc){
                 Category category = categoryServices.FindCategorieById(idc);
                 return new ResponseEntity<>(category,HttpStatus.OK);
@@ -50,13 +50,19 @@ public class CategoryRestController {
 
 
     ////////////////////// tools code /////////////////
-            @PostMapping("/addtools/{idc}")
+            @PostMapping("/addtools/{idc}") //http://localhost:8089/havenfort/Marketplace/addtools/11
             @ResponseBody
             public Tools addToolsToCategory(@RequestBody Tools tools, @PathVariable("idc") Long idc){
                 return categoryServices.addtoolsAndAssignTocategory(tools, idc);}
+    /*{
+        "name": "Tenttest",
+        "price": 100.0,
+        "quantity": 20
+
+}*/
 
 
-           @PutMapping("/Assigntoolstoshop/{idt}/{idshop}")
+           @PutMapping("/Assigntoolstoshop/{idt}/{idshop}") //http://localhost:8089/havenfort/Marketplace/Assigntoolstoshop/10/3
            public ResponseEntity<Tools> assignToolToShop(@PathVariable Long idt, @PathVariable Long idshop) {
                Tools updatedTool = categoryServices.AssignToolsToshop(idt, idshop);
                return ResponseEntity.ok(updatedTool);
@@ -64,35 +70,29 @@ public class CategoryRestController {
 
 
 
-            @PutMapping("/setAvailability/{idt}")
+            @PutMapping("/setAvailability/{idt}") //http://localhost:8089/havenfort/Marketplace/setAvailability/15
             public void changeAvailability(@PathVariable("idt") Long idt){
                 categoryServices.SetAvailability(idt);
             }
 
-            @DeleteMapping("/deletetool/{idt}")
+            @DeleteMapping("/deletetool/{idt}") //http://localhost:8089/havenfort/Marketplace/deletetool/15
             public ResponseEntity<?> deletetool(@PathVariable("idt") Long idt){
                 categoryServices.DeleteTool(idt);
                 return new ResponseEntity<>(HttpStatus.OK);}
 
-            @GetMapping("/getallTools")
+
+            @GetMapping("/getallTools")//http://localhost:8089/havenfort/Marketplace/getallTools
             public List<Tools> GetTools(){
                 return categoryServices.GetTools() ;}
 
-            @GetMapping("findtoolbyid/{idt}")
+            @GetMapping("findtoolbyid/{idt}")//http://localhost:8089/havenfort/Marketplace/findtoolbyid/14
             public ResponseEntity<Tools> FindtoolsById(@PathVariable("idt") Long idt){
                 Tools tools = categoryServices.FindtoolsById(idt);
                 return new ResponseEntity<>(tools,HttpStatus.OK);
             }
 
 
-
-
-
-
-
-
-
-            @GetMapping("/search")
+            @GetMapping("/search") //http://localhost:8089/havenfort/Marketplace/search?keyword=tent
             public List<Tools> searchTools(@RequestParam("keyword") String keyword) {
                 List<Tools> tools = categoryServices.searchTools(keyword);
                 if (tools.isEmpty()) {
@@ -110,24 +110,27 @@ public class CategoryRestController {
 
 
     /////////////////////// shop code //////////////
-            @PostMapping("/addShop")
+            @PostMapping("/addShop") //http://localhost:8089/havenfort/Marketplace/addShop
             @ResponseBody
             public Shop addShop(@RequestBody Shop shop){return categoryServices.addShop(shop);}
+    /*{
+     "nameshop": "testshop"
+}*/
 
 
-            @GetMapping("/getallShops")
+            @GetMapping("/getallShops") //http://localhost:8089/havenfort/Marketplace/getallShops
             public List<Shop> GetShops (){ return categoryServices.GetShops();}
 
-            @DeleteMapping("/DeleteShop/{idshop}")
+            @DeleteMapping("/DeleteShop/{idshop}") //http://localhost:8089/havenfort/Marketplace/DeleteShop/10
             public  ResponseEntity<?> DeleteShop(@PathVariable("idshop") Long idshop){
                 categoryServices.DeleteShop(idshop);
                 return new ResponseEntity<>(HttpStatus.OK);}
 
-            @DeleteMapping("/RemoveToolFromShop/{idshop}/{idt}")
+            @DeleteMapping("/RemoveToolFromShop/{idshop}/{idt}")//http://localhost:8089/havenfort/Marketplace/RemoveToolFromShop/3/10
             public void RemoveToolFromShop(@PathVariable("idshop") Long idshop, @PathVariable("idt") Long idt){
                 categoryServices.RemovetoolFrominventory(idshop, idt);}
 
-            @GetMapping("/findshops")
+            @GetMapping("/findshops")//http://localhost:8089/havenfort/Marketplace/findshops?keyword=carr
             public List<Shop> Searchshops(@RequestParam("keyword") String keyword){
                 List<Shop> shops = categoryServices.Searchshops(keyword);
                 if (shops.isEmpty()){
@@ -135,7 +138,7 @@ public class CategoryRestController {
                 }
                 return shops ;}
 
-                @GetMapping("findshopbyid/{idshop}")
+                @GetMapping("findshopbyid/{idshop}") //http://localhost:8089/havenfort/Marketplace/findshopbyid/3
                 public ResponseEntity<Shop> FindShopById(@PathVariable("idshop") Long idshop){
                     Shop shop = categoryServices.FindShopById(idshop);
                     return new ResponseEntity<>(shop,HttpStatus.OK);
@@ -144,12 +147,17 @@ public class CategoryRestController {
     ///////////////////////////////////   Promotion   /////////////////////////////////
 
 
-            @PostMapping("/AddPromotionWithGenretedCode")
+            @PostMapping("/AddPromotionWithGenretedCode")//http://localhost:8089/havenfort/Marketplace/AddPromotionWithGenretedCode
             public Promotion addPromotionwithcode(@RequestBody Promotion promotion) {
                 return categoryServices.addPromotionWithGeneratedCode(promotion);}
+    /*{
+    "pname": "htest",
+        "discountAmount": 10.0
+
+}*/
 
 
-            @PutMapping("/promotionsto/{pid}/{idshop}/{idt}")
+            @PutMapping("/promotionsto/{pid}/{idshop}/{idt}") //http://localhost:8089/havenfort/Marketplace/promotionsto/6/3/10
             public ResponseEntity<?> assignPromotionToShopAndTool(@PathVariable Long pid, @PathVariable Long idshop, @PathVariable Long idt) {
                 Shop shop = categoryServices.assignPromotionToShopandtools(pid, idshop, idt);
                 if (shop == null) {
@@ -168,25 +176,25 @@ public class CategoryRestController {
 
 
 
-            @DeleteMapping("/DeletePromotion/{pid}")
+            @DeleteMapping("/DeletePromotion/{pid}")//http://localhost:8089/havenfort/Marketplace/DeletePromotion/2
             public ResponseEntity<?> DeletePromotion(@PathVariable("pid") Long pid){
                 categoryServices.DeletePromotion(pid);
                 return new ResponseEntity<>(HttpStatus.OK);}
 
-            @PostMapping("/{pid}/activate")
+            @PostMapping("/{pid}/activate")//http://localhost:8089/havenfort/Marketplace/4/activate
             public ResponseEntity<Void> ActivatePromotion(@PathVariable("pid") Long pid){
                 Promotion promotion = iPromotionRepository.findById(pid).orElseThrow(()-> new PromotionNotFoundException(pid));
                 categoryServices.activatePromotion(promotion);
                 return ResponseEntity.ok().build();}
 
-            @PostMapping("/{pid}/stop")
+            @PostMapping("/{pid}/stop")//http://localhost:8089/havenfort/Marketplace/4/stop
             public ResponseEntity<Void> StopPromotion(@PathVariable("pid") Long pid){
                 Promotion promotion = iPromotionRepository.findById(pid).orElseThrow(()-> new PromotionNotFoundException(pid));
                 categoryServices.StopPromotion(promotion);
                 return ResponseEntity.ok().build();}
 
 
-            @GetMapping("/getAllPromotions")
+            @GetMapping("/getAllPromotions") //http://localhost:8089/havenfort/Marketplace/getAllPromotions
             public List<Promotion> getAllPromotions() {
                 return categoryServices.getAllPromotions();}
 
@@ -195,12 +203,12 @@ public class CategoryRestController {
                 categoryServices.disableExpiredPromotions();}
 
 
-            @PutMapping("/applyPromotionToToolInShop/{idshop}/{idt}/{pid}")
+            @PutMapping("/applyPromotionToToolInShop/{idshop}/{idt}/{pid}") // http://localhost:8089/havenfort/Marketplace/applyPromotionToToolInShop/3/10/6
             public Tools applyPromotionToToolInShop(@PathVariable Long idshop, @PathVariable Long idt, @PathVariable Long pid){
                 return categoryServices.applyPromotionToToolInShop(idshop, idt, pid);
             }
 
-            @GetMapping("findpromotion/{pid}")
+            @GetMapping("findpromotion/{pid}") //http://localhost:8089/havenfort/Marketplace/findpromotion/6
             public ResponseEntity<Promotion> FindPromotionById(@PathVariable("pid") Long pid){
                 Promotion promotion = categoryServices.FindPromotionById(pid);
                 return new ResponseEntity<>(promotion,HttpStatus.OK);

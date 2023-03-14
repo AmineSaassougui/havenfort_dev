@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface IToolsRepository extends JpaRepository<Tools, Long> {
-    @Query("SELECT t FROM Tools t WHERE t.name LIKE %:keyword% OR t.description LIKE %:keyword%  ")
+    @Query("SELECT t FROM Tools t WHERE t.name LIKE %:keyword% OR t.description LIKE %:keyword% ")
     List<Tools> findByKeyword(@Param("keyword") String keyword);
 
 
