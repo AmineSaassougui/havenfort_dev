@@ -5,7 +5,7 @@ import com.camp.havenfort_dev.entities.Category;
 import com.camp.havenfort_dev.entities.Promotion;
 import com.camp.havenfort_dev.entities.Shop;
 import com.camp.havenfort_dev.entities.Tools;
-import com.camp.havenfort_dev.exceptions.PromotionNotFoundException;
+//import com.camp.havenfort_dev.exceptions.PromotionNotFoundException;
 import com.camp.havenfort_dev.repositories.IPromotionRepository;
 import com.camp.havenfort_dev.services.ICategoryServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +75,7 @@ public class CategoryRestController {
 
     @PostMapping("/{pid}/activate")
     public ResponseEntity<Void> activatePromotion(@PathVariable Long pid){
-        Promotion promotion = iPromotionRepository.findById(pid).orElseThrow(()-> new PromotionNotFoundException(pid));
+        Promotion promotion = iPromotionRepository.findById(pid).get();
         categoryServices.activatePromotion(promotion);
         return ResponseEntity.ok().build();
 

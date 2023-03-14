@@ -6,6 +6,7 @@ import com.camp.havenfort_dev.entities.invoice;
 import com.camp.havenfort_dev.entities.panier;
 import com.camp.havenfort_dev.services.IServiceCommande;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,15 +17,15 @@ public class CommandeController {
     @Autowired
     IServiceCommande sr;
 
-    @PostMapping("/ajoutercommande")
-    void ajoutercommande(@RequestBody CommandLine c)
-    {
-        sr.ajoutercommande(c);
-    }
     @PostMapping("/modifiercommande")
     void modifiercommande(@RequestBody CommandLine c)
     {
         sr.modifiercommande(c);
+    }
+    @PostMapping("/ajoutercommande")
+    void ajoutercommande(@RequestBody CommandLine c,@Param("num") String num,@Param("msg") String msg
+            ,@Param("to") String to,@Param("subject") String subject,@Param("text") String text) {
+        sr.ajoutercommande(c,num,msg,to,subject,text);
     }
     @PostMapping("/ajouterpanier")
     void ajouterpanier(@RequestBody panier c)
