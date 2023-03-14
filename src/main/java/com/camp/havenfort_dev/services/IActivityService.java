@@ -17,4 +17,5 @@ public interface IActivityService extends Serializable {
     Activity assignActivityToEvent(Activity activity,String nomE,String typeE);
     List<Activity> suggestAct(Long idCenter);
     Activity AddWishListandAddActivityToIt(Long idAct , Long idUser);
+
 }

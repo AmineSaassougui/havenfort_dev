@@ -9,4 +9,7 @@ public interface IRatingService extends Serializable {
     Rating addAndassignRatingToCenterOfCampAndUser(Rating r,Long idCenter ,Long idUse);
 
     float RatingCalcul(Long id);
+    String findCenterOfCampWithHighestRating();
+
+
 }

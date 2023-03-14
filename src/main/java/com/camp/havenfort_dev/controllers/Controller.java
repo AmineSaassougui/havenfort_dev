@@ -196,4 +196,10 @@ public class Controller {
             return ResponseEntity.status(500).build();
         }
     }
+    @GetMapping("/findCenterOfCampWithHighestRating")
+    public String findCenterOfCampWithHighestRating(){
+        return iRatingService.findCenterOfCampWithHighestRating();
+
+    }
+
 }

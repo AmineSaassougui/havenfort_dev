@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -30,7 +31,7 @@ public class RatingService implements IRatingService{
         r.setUser(user);
         r.setCenterOfCamp(centerOfCamp);
         ratingRepo.save(r);
-
+         
 
         return r;
     }
@@ -39,4 +40,33 @@ public class RatingService implements IRatingService{
     public float RatingCalcul(Long id) {
         return ratingRepo.NbRating(id);
     }
+
+    @Override
+    public String findCenterOfCampWithHighestRating() {
+
+        List<CenterOfCamp> centerOfCamps = centerOfCampRepo.findAll();
+        float highestRating = 0;
+        CenterOfCamp nbev = null;
+
+        for (CenterOfCamp cent : centerOfCamps) {
+            Set<Rating> ratings = cent.getRatings();
+            if (ratings != null && !ratings.isEmpty()) {
+                float totalRating = 0;
+                for (Rating rating : ratings) {
+                    totalRating += rating.getNote();
+                }
+                float moy = totalRating / ratings.size();
+                if (moy > highestRating) {
+                    highestRating = moy;
+                    nbev = cent;
+                }
+            }
+        }
+        return "Le center of camp avec la note la plus élevée est  "+ nbev.getTypeCenter()+" avec une moyenne de "+ highestRating;
+
+
 }
+
+
+}
+
