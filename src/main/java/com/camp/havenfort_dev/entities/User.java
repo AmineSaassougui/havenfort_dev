@@ -1,12 +1,16 @@
 package com.camp.havenfort_dev.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class User {
 
     @Id
@@ -33,6 +37,17 @@ public class User {
     @ManyToMany(mappedBy="users", cascade=CascadeType.ALL)
     @JsonIgnore
     private Set<Event> events;
+    @JsonIgnore
+    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    private  Set<Rating> ratings;
+    @JsonIgnore
+    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    private Set<ActivityLike> activityLikes;
+
+
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.EAGER)
+    private WishList wishList;
 
 
 

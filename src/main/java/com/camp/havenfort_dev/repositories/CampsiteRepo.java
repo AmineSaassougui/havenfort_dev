@@ -1,4 +1,4 @@
-package com.camp.havenfort_dev.repositories;
+package com.camp.havenfort_dev.Repositories;
 
 import com.camp.havenfort_dev.entities.Campsite;
 import org.springframework.data.jpa.repository.JpaRepository;

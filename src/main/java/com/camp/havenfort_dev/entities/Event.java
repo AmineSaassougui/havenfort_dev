@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -22,6 +23,8 @@ public class Event {
     private String typeEvent;
     private String nomEvent;
     private Boolean active;
+    private Date date;
+    private int dure;
     @JsonIgnore
     @OneToMany(mappedBy="event", cascade=CascadeType.ALL)
     private Set<Activity> activities;

@@ -3,13 +3,8 @@ package com.camp.havenfort_dev.services;
 
 import com.camp.havenfort_dev.entities.Event;
 
-
-
-
-import com.camp.havenfort_dev.entities.Reservation;
-
-
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IEventService extends Serializable {
@@ -18,13 +13,15 @@ public interface IEventService extends Serializable {
 
     List<Event> findAllEvent();
     Event updateEvent(Event event);
-    Event findById(Long id);
+
     void deleteEvent(Long id);
-    void addEventToActivity(Event event,Long idActivity);
-    void addEventToReservation(Event event, Long idReservation);
-    List<Event> getEventByCampsite(Long idCampsite);
+
+
+   // List<Event> getEventByCampsite(Long idCampsite);
     List<Event> getEventByCenterOfCamp(Long idCenterOfCamp);
     Event assignEventToCenterOfCamp(Event event, String nomC, String lieuC);
+
+
 
 
 }

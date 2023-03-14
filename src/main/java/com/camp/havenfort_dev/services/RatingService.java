@@ -1,0 +1,42 @@
+package com.camp.havenfort_dev.services;
+
+import com.camp.havenfort_dev.Repositories.CenterOfCampRepo;
+import com.camp.havenfort_dev.Repositories.RatingRepo;
+import com.camp.havenfort_dev.Repositories.Userrepository;
+import com.camp.havenfort_dev.entities.CenterOfCamp;
+import com.camp.havenfort_dev.entities.Rating;
+import com.camp.havenfort_dev.entities.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@Service
+public class RatingService implements IRatingService{
+
+    @Autowired
+    RatingRepo ratingRepo;
+    @Autowired
+    Userrepository userrepository;
+    @Autowired
+    CenterOfCampRepo centerOfCampRepo;
+
+
+    @Override
+    public Rating addAndassignRatingToCenterOfCampAndUser(Rating r, Long idCenter, Long idUse) {
+        CenterOfCamp centerOfCamp = centerOfCampRepo.findById(idCenter).orElse(null);
+        User user = userrepository.findById(idUse).orElse(null);
+        r.setUser(user);
+        r.setCenterOfCamp(centerOfCamp);
+        ratingRepo.save(r);
+
+
+        return r;
+    }
+
+    @Override
+    public float RatingCalcul(Long id) {
+        return ratingRepo.NbRating(id);
+    }
+}

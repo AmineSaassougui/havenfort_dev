@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -14,16 +15,19 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class Rating {
+public class WishList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer note;
+    private Date date;
+
 
     @JsonIgnore
-    @ManyToOne
-    private  User user;
+    @OneToMany(mappedBy = "wishList",fetch = FetchType.EAGER)
+    private Set<Activity> activities;
+
+
     @JsonIgnore
-    @ManyToOne
-    private CenterOfCamp centerOfCamp;
+    @OneToOne(mappedBy = "wishList")
+    private User user;
 }

@@ -7,23 +7,27 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-public class Rating {
+public class ActivityLike {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Integer note;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    Long idActivityLike;
+    @Enumerated(EnumType.STRING)
+    Reaction react;
+    @JsonIgnore
+    LocalDateTime dateLike;
+    @JsonIgnore
+    @ManyToOne
+    User user;
+    @JsonIgnore
+    @ManyToOne
+    Activity activity;
 
-    @JsonIgnore
-    @ManyToOne
-    private  User user;
-    @JsonIgnore
-    @ManyToOne
-    private CenterOfCamp centerOfCamp;
 }

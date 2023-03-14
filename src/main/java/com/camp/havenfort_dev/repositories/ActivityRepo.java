@@ -1,4 +1,4 @@
-package com.camp.havenfort_dev.repositories;
+package com.camp.havenfort_dev.Repositories;
 
 import com.camp.havenfort_dev.entities.Activity;
 import com.camp.havenfort_dev.entities.Event;
@@ -16,4 +16,5 @@ public interface ActivityRepo extends JpaRepository<Activity,Long> {
     Integer countByArchiveIsFalseAndEvent(Event event);
     @Query("SELECT ac FROM Activity ac WHERE ac.typeActivity = :type")
     Activity getActivitiesByType(@Param("type") TypeCenAct typeActivity);
+    List<Activity> findAllByTypeActivity(TypeCenAct typeCenAct);
 }

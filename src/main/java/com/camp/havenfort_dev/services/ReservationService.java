@@ -1,9 +1,9 @@
 package com.camp.havenfort_dev.services;
+import com.camp.havenfort_dev.Repositories.EventRepo;
+import com.camp.havenfort_dev.Repositories.ReservationRepo;
 import com.camp.havenfort_dev.entities.Event;
 
 import com.camp.havenfort_dev.exception.UserNotFoundException;
-import com.camp.havenfort_dev.repositories.EventRepo;
-import com.camp.havenfort_dev.repositories.ReservationRepo;
 import com.camp.havenfort_dev.entities.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class ReservationService implements IReservationService{
+
     @Autowired
     ReservationRepo reservationRepo;
-
     @Autowired
     EventRepo eventRepo;
     @Override
@@ -21,10 +21,7 @@ public class ReservationService implements IReservationService{
         return reservationRepo.save(r);
     }
 
-    @Override
-    public List<Reservation> findAllReservation() {
-        return reservationRepo.findAll();
-    }
+
 
     @Override
     public Reservation updateReservation(Reservation r) {
@@ -42,14 +39,6 @@ public class ReservationService implements IReservationService{
         reservationRepo.deleteById(id);
     }
 
-    @Override
-    public List<Reservation> getReservationByEvent(Long idEvent) {
-        return reservationRepo.getReservationByEvent(idEvent);
-    }
 
-    @Override
-    public int getNbrReservationEvent(Long idEvent) {
-        return 0;
-    }
 
 }

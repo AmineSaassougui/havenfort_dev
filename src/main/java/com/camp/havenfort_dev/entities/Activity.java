@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -17,12 +19,24 @@ public class Activity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long idActivity;
-    private String type;
+    private String name;
+    private String date;
     private String lieu;
+    private String price;
     private Boolean archive;
     @Enumerated(EnumType.STRING)
     private TypeCenAct typeActivity;
     @ManyToOne
     @JsonIgnore
     private Event event;
+
+    @JsonIgnore
+    @OneToMany(mappedBy="activity", cascade=CascadeType.ALL)
+    private Set<ActivityLike> activityLikes;
+
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    private WishList wishList;
 }

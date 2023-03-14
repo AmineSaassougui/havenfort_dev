@@ -1,18 +1,14 @@
 package com.camp.havenfort_dev.services;
 
 
-import com.camp.havenfort_dev.entities.Activity;
-import com.camp.havenfort_dev.entities.CenterOfCamp;
-import com.camp.havenfort_dev.entities.Event;
-import com.camp.havenfort_dev.entities.TypeCenAct;
+import com.camp.havenfort_dev.Repositories.*;
+import com.camp.havenfort_dev.entities.*;
 import com.camp.havenfort_dev.exception.UserNotFoundException;
-import com.camp.havenfort_dev.repositories.ActivityRepo;
-import com.camp.havenfort_dev.repositories.CenterOfCampRepo;
-import com.camp.havenfort_dev.repositories.EventRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -22,29 +18,26 @@ public class ActivityService implements IActivityService{
     @Autowired
     ActivityRepo activityRepo;
     @Autowired
+    CenterOfCampRepo centerOfCampRepo;
+    @Autowired
     EventRepo eventRepo;
     @Autowired
-    CenterOfCampRepo centerOfCampRepo;
+    Userrepository userrepository;
+    @Autowired
+    IWishListRepo iWishListRepo;
     @Override
     public Activity addActivity(Activity activity) {
         return activityRepo.save(activity);
     }
 
-    @Override
-    public List<Activity> findAllActivity() {
-        return activityRepo.findAll();
-    }
+
 
     @Override
     public Activity updateActivity(Activity activity) {
         return activityRepo.save(activity);
     }
 
-    @Override
-    public Activity findById(Long id) {
-        return activityRepo.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User by id " + id + " was not found"));
-    }
+
 
     @Override
     public void deleteActivity(Long id) {
@@ -90,6 +83,27 @@ public class ActivityService implements IActivityService{
             }
         }
         return sugggetact;
+    }
+
+    @Override
+    public Activity AddWishListandAddActivityToIt(Long idAct, Long idUser) {
+        User u = userrepository.findById(idUser).get();
+        Activity a = activityRepo.findById(idAct).get();
+        if (u.getWishList() == null) {
+            WishList wishList = new WishList();
+            wishList.setDate(new Date());
+            a.setWishList(wishList);
+            u.setWishList(wishList);
+            iWishListRepo.save(wishList);
+            userrepository.save(u);
+            activityRepo.save(a);
+        }
+        else{
+            a.setWishList(u.getWishList());
+            activityRepo.save(a);
+        }
+        return a;
+
     }
 
 }

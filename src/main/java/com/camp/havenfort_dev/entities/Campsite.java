@@ -19,10 +19,11 @@ public class Campsite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long idCampsite;
-    private String nomlieu;
-    private String sols;
     private String distance;
     private String description;
+    private  String adresse;
+    private String altitude;
+    private String longitude;
     @JsonIgnore
     @OneToMany(mappedBy="campsite", cascade=CascadeType.ALL)
     private Set<Event> events;

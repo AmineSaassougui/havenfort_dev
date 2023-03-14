@@ -31,4 +31,8 @@ public class CenterOfCamp {
     @JsonIgnore
     @OneToMany(mappedBy="centerOfCamp", cascade=CascadeType.ALL)
     private Set<Event> events;
+    @JsonIgnore
+    @OneToMany(mappedBy="centerOfCamp", cascade=CascadeType.ALL)
+    private Set<Rating> ratings;
+
 }

@@ -3,12 +3,17 @@ package com.camp.havenfort_dev.controllers;
 
 import com.camp.havenfort_dev.entities.*;
 import com.camp.havenfort_dev.services.*;
+import com.google.zxing.WriterException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
+
 @RequestMapping("/Camp")
 @RestController
 @AllArgsConstructor
@@ -21,6 +26,8 @@ public class Controller {
     ICenterOfCampService iCenterOfCampService;
     ICampsiteService iCampsiteService;
     IActivityService iActivityService;
+    IActivityLikeService iActivityLikeService;
+    IRatingService iRatingService;
 
 
     @PostMapping("/AddReservation")
@@ -28,11 +35,7 @@ public class Controller {
         return iReservationService.addReservation(r);
     }
 
-    @GetMapping("/allReservation")
-    public ResponseEntity<List<Reservation>> getAllReservation (){
-        List<Reservation> reservations = iReservationService.findAllReservation();
-        return new ResponseEntity<>(reservations, HttpStatus.OK);
-    }
+
     @GetMapping("/findReservation/{id}")
     public ResponseEntity<Reservation> getReservationById (@PathVariable("id")Long id){
         Reservation reservation = iReservationService.findReservationById(id);
@@ -49,11 +52,7 @@ public class Controller {
         iReservationService.deleteReservation(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @GetMapping("/getReservation/{idEvent}")
-    @ResponseBody
-    public List<Reservation> getReservationByEvent(Long idEvent){
-        return iReservationService.getReservationByEvent(idEvent);
-    }
+
 
     @PostMapping("/AddEvent")
     public Event addEvent(@RequestBody Event event){
@@ -64,11 +63,7 @@ public class Controller {
         List<Event> events = iEventService.findAllEvent();
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
-    @GetMapping("/findEvent/{id}")
-    public ResponseEntity<Event> getEventById (@PathVariable("id")Long id){
-        Event event = iEventService.findById(id);
-        return new ResponseEntity<>(event, HttpStatus.OK);
-    }
+
 
     @PutMapping("/updateEvent")
     public ResponseEntity<Event> updateEvent(@RequestBody Event event){
@@ -80,41 +75,24 @@ public class Controller {
         iEventService.deleteEvent(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @GetMapping("/getEventByCampsite/{idCampsite}")
-    @ResponseBody
-    public List<Event> getEventByCampsite(@PathVariable("idCampsite") Long idCampsite){
-        return iEventService.getEventByCampsite(idCampsite);
+   // @GetMapping("/getEventByCampsite/{idCampsite}")
+  //  @ResponseBody
+  //  public List<Event> getEventByCampsite(@PathVariable("idCampsite") Long idCampsite){
+  //      return iEventService.getEventByCampsite(idCampsite);
+  //  }
+      @GetMapping("/getEventByCenterOfCamp/{idCenterOfCamp}")
+      @ResponseBody
+      public List<Event> getEventByCenterOfCamp(@PathVariable("idCenterOfCamp") Long idCenterOfCamp){
+         return iEventService.getEventByCenterOfCamp(idCenterOfCamp);
     }
-    @GetMapping("/getEventByCenterOfCamp/{idCenterOfCamp}")
-    @ResponseBody
-    public List<Event> getEventByCenterOfCamp(@PathVariable("idCenterOfCamp") Long idCenterOfCamp){
-        return iEventService.getEventByCenterOfCamp(idCenterOfCamp);
-    }
-    @PostMapping ("/addEvent/{idActivity}")
-    @ResponseBody
-    public void addEventToActivity(@RequestBody Event event,@PathVariable("idActivity") Long idActivity){
-        iEventService.addEventToActivity(event,idActivity);
-    }
-    @PostMapping ("/addEvent/{idReservation}")
-    @ResponseBody
-    public void addEventToReservation(@RequestBody Event event,@PathVariable("idReservation") Long idReservation) {
-        iEventService.addEventToReservation(event,idReservation);
-    }
+
 
     @PostMapping("/AddCenterOfCamp")
     public CenterOfCamp addCenterOfCamp(@RequestBody CenterOfCamp centerOfCamp){
         return iCenterOfCampService.addCenterOfCamp(centerOfCamp);
     }
-    @GetMapping("/allCenterOfCamp")
-    public ResponseEntity<List<CenterOfCamp>> getAllCenterOfCamp (){
-        List<CenterOfCamp> centerOfCamps = iCenterOfCampService.findAllCenterOfCamp();
-        return new ResponseEntity<>(centerOfCamps, HttpStatus.OK);
-    }
-    @GetMapping("/findCenterOfCamp/{id}")
-    public ResponseEntity<CenterOfCamp> getCenterOfCampById (@PathVariable("id")Long id){
-        CenterOfCamp centerOfCamp = iCenterOfCampService.findById(id);
-        return new ResponseEntity<>(centerOfCamp, HttpStatus.OK);
-    }
+
+
 
     @PutMapping("/updateCenterOfCamp")
     public ResponseEntity<CenterOfCamp> updateEmployee(@RequestBody CenterOfCamp centerOfCamp){
@@ -126,25 +104,14 @@ public class Controller {
         iCenterOfCampService.deleteCenterOfCamp(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PostMapping ("/addCenterOfCamp/{idEvent}")
-    public void addCenterOfCampToEvent(@RequestBody CenterOfCamp centerOfCamp,@PathVariable("idEvent") Long idEvent){
-        iCenterOfCampService.addCenterOfCampToEvent(centerOfCamp,idEvent);
-    }
+
 
     @PostMapping("/AddCampsite")
     public Campsite addCampsite(@RequestBody Campsite campsite){
         return iCampsiteService.addCampsite(campsite);
     }
-    @GetMapping("/allCampsite")
-    public ResponseEntity<List<Campsite>> getAllCampsite (){
-        List<Campsite> campsites = iCampsiteService.findAllCampsite();
-        return new ResponseEntity<>(campsites, HttpStatus.OK);
-    }
-    @GetMapping("/findCampsite/{id}")
-    public ResponseEntity<Campsite> getCampsiteById (@PathVariable("id")Long id){
-        Campsite campsite = iCampsiteService.findById(id);
-        return new ResponseEntity<>(campsite, HttpStatus.OK);
-    }
+
+
 
     @PutMapping("/updateCampsite")
     public ResponseEntity<Campsite> updateCampsite(@RequestBody Campsite campsite){
@@ -156,25 +123,14 @@ public class Controller {
         iCampsiteService.deleteCampsite(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PostMapping("/addCampsite/{idEvent}")
-    public void addCampsiteToEvent(@RequestBody Campsite campsite,@PathVariable("idEvent") Long idEvent){
-        iCampsiteService.addCampsiteToEvent(campsite,idEvent);
-    }
+
 
     @PostMapping("/AddActivity")
     public Activity addActivity(@RequestBody Activity activity){
         return iActivityService.addActivity(activity);
     }
-    @GetMapping("/allActivity")
-    public ResponseEntity<List<Activity>> getAllActivity (){
-        List<Activity> activities = iActivityService.findAllActivity();
-        return new ResponseEntity<>(activities, HttpStatus.OK);
-    }
-    @GetMapping("/findActivity/{id}")
-    public ResponseEntity<Activity> getActivityById (@PathVariable("id")Long id){
-        Activity activity = iActivityService.findById(id);
-        return new ResponseEntity<>(activity, HttpStatus.OK);
-    }
+
+
 
     @PutMapping("/updateActivity")
     public ResponseEntity<Activity> updateActivity(@RequestBody Activity activity){
@@ -193,10 +149,10 @@ public class Controller {
     public List<Activity> getActivityByEvent(Long idEvent){
         return iActivityService.getActivityByEvent(idEvent);
     }
-    @PutMapping("/assignActivityToEvent/{nom}/{prenom}")
+    @PutMapping("/assignActivityToEvent/{nom}/{type}")
     public Activity assignActivityToEvent(@RequestBody Activity activity,
                                           @PathVariable("nom") String nomE,
-                                          @PathVariable("prenom") String typeE){
+                                          @PathVariable("type") String typeE){
         return iActivityService.assignActivityToEvent(activity,nomE,typeE);
     }
     @PutMapping("/assignEventToCenterOfCamp/{nom}/{lieu}")
@@ -210,5 +166,34 @@ public class Controller {
     public List<Activity> suggestAct(@PathVariable("id") Long idCenter) {
         return iActivityService.suggestAct(idCenter);
     }
+    @PutMapping("/addAndAssignActivityLikeToActivityAndUser/{idActivity}/{idUser}")
+    public ActivityLike addAndAssignActivityLikeToActivityAndUser(@RequestBody ActivityLike activityLike,@PathVariable("idActivity") Long idActivity,@PathVariable("idUser") Long idUser){
+        return iActivityLikeService.addAndAssignActivityLikeToActivityAndUser(activityLike,idActivity,idUser);
+    }
+    @PutMapping("/addAndAssignRatingToCenterOfCampAndUser/{idCenter}/{idUse}")
+    public Rating addAndassignRatingToCenterOfCampAndUser(@RequestBody Rating r,@PathVariable("idCenter") Long idCenter,@PathVariable("idUse") Long idUse){
+        return iRatingService.addAndassignRatingToCenterOfCampAndUser(r,idCenter,idUse);
+    }
 
+    @GetMapping("CalculRating/{id}")
+    public float CalculRating(@PathVariable("id") Long idCenter) {
+        return iRatingService.RatingCalcul(idCenter);
+    }
+
+
+    @PutMapping("addActivityToWishlist/{idact}/{iduser}")
+    public Activity AddWishListandAddActivityToIt(@PathVariable("idact") Long idAct, @PathVariable("iduser") Long idUser) {
+        return iActivityService.AddWishListandAddActivityToIt(idAct, idUser);
+    }
+
+     @GetMapping(value = "/{idCampsite}/qr-code", produces = MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody ResponseEntity<byte[]> generateQRCode(@PathVariable Long idCampsite) {
+        try {
+            byte[] qrCode = iCampsiteService.generateQRCode(idCampsite);
+            return ResponseEntity.ok(qrCode);
+        } catch (WriterException | IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
 }
